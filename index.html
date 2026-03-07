@@ -61,7 +61,6 @@
             font-weight: 900; 
             letter-spacing: -1.5px; 
             text-transform: uppercase; 
-            /* Phủ gradient xen lẫn màu theme và màu đỏ */
             background: linear-gradient(45deg, var(--primary) 30%, var(--red) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -117,7 +116,6 @@
 
         .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 80px; perspective: 1000px; }
         
-        /* Hiệu ứng Tilt 3D cho Card */
         .product-card { 
             background: var(--bg-color); 
             border-radius: 12px; 
@@ -172,7 +170,7 @@
         @keyframes fadeOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
 
         /* === 6. ABOUT / BANNER BOTTOM === */
-        .about-section { text-align: center; margin: 40px 0 80px; padding-top: 60px; border-top: 1px solid var(--border-color); }
+        .about-section { text-align: center; margin: 40px 0 0; padding-top: 60px; border-top: 1px solid var(--border-color); padding-bottom: 60px; }
         .about-title { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 20px; color: var(--text-color); }
         .about-desc { font-size: 1.1rem; line-height: 1.8; color: #666; max-width: 800px; margin: 0 auto 50px; font-weight: 500; }
         .about-desc strong { color: var(--text-color); font-weight: 700; }
@@ -180,12 +178,232 @@
         .about-subtitle { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; color: var(--text-color); }
         .about-subdesc { font-size: 1rem; color: #888; margin-bottom: 40px; font-weight: 500; }
         
-        .about-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .gallery-item { border-radius: 12px; overflow: hidden; position: relative; height: 350px; cursor: pointer; box-shadow: 0 5px 15px var(--card-shadow); }
+        .about-gallery { 
+            display: grid; 
+            grid-template-columns: repeat(6, 1fr); 
+            gap: 20px; 
+            width: 100%;
+        }
+        
+        .gallery-item { 
+            border-radius: 12px; 
+            overflow: hidden; 
+            position: relative; 
+            cursor: pointer; 
+            box-shadow: 0 5px 15px var(--card-shadow); 
+        }
+        
+        .gallery-item:nth-child(1),
+        .gallery-item:nth-child(2),
+        .gallery-item:nth-child(3) {
+            grid-column: span 2;
+            height: 450px; 
+        }
+
+        .gallery-item:nth-child(4),
+        .gallery-item:nth-child(5) {
+            grid-column: span 3;
+            height: 550px; 
+        }
+
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .gallery-item:hover img { transform: scale(1.05); }
-        .gallery-item::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.05); transition: 0.3s; pointer-events: none; }
+        .gallery-item::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.1); transition: 0.3s; pointer-events: none; }
         .gallery-item:hover::after { background: rgba(0,0,0,0); }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            padding: 30px 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: white;
+            text-align: left;
+            transform: translateY(10px);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .gallery-overlay h4 { font-size: 1.5rem; font-weight: 900; margin-bottom: 5px; text-transform: uppercase; }
+        .gallery-overlay p { font-size: 1rem; font-weight: 500; color: var(--red); text-transform: uppercase; letter-spacing: 1px;}
+
+        /* === 7. FOOTER NỀN ĐEN === */
+        .footer-dark {
+            background-color: #0b0b0b;
+            color: #ffffff;
+            padding: 60px 0 30px;
+            margin-top: 0;
+        }
+        
+        .footer-features {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #222;
+            padding-bottom: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .feature-item i {
+            font-size: 2.2rem;
+            color: #fff;
+        }
+        
+        .feature-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+        
+        .feature-text p {
+            font-size: 0.9rem;
+            color: #888;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 15px;
+        }
+
+        .footer-col ul li a {
+            color: #888;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--red);
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--red);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 40px;
+            border-top: 1px solid #222;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        /* === 8. MODAL 3D HIỂN THỊ THÔNG TIN FOOTER === */
+        .info-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+        .info-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .info-modal-content {
+            background: var(--bg-color);
+            color: var(--text-color);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            padding: 40px;
+            position: relative;
+            transform: scale(0.8) translateY(50px) rotateX(-20deg);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Hiệu ứng nảy 3D */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            perspective: 1000px;
+        }
+        .info-modal-overlay.active .info-modal-content {
+            transform: scale(1) translateY(0) rotateX(0deg);
+            opacity: 1;
+        }
+        .close-modal-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-modal-btn:hover {
+            color: var(--red);
+            transform: rotate(90deg);
+        }
+        #modalTitle {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+        #modalBody {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #666;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        /* Custom scrollbar cho modal */
+        #modalBody::-webkit-scrollbar { width: 6px; }
+        #modalBody::-webkit-scrollbar-track { background: var(--bg-alt); border-radius: 4px; }
+        #modalBody::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
 
         @media (max-width: 900px) {
             .menu-row { display: none; }
@@ -193,12 +411,17 @@
             .product-card { transform-style: flat; } 
             .slide-content h1 { font-size: 2.8rem; }
             .about-gallery { grid-template-columns: repeat(2, 1fr); }
+            .gallery-item:nth-child(n) { grid-column: span 1; height: 300px; }
             .about-title { font-size: 1.8rem; }
+            .footer-features { flex-wrap: wrap; gap: 30px; }
+            .feature-item { width: 45%; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: 1fr; }
             .about-gallery { grid-template-columns: 1fr; }
-            .gallery-item { height: 250px; }
+            .feature-item { width: 100%; }
+            .footer-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -307,19 +530,140 @@
             <p class="about-subdesc">Cùng Blue Ultra kiến tạo nên xu hướng của riêng bạn</p>
             
             <div class="about-gallery">
-                <div class="gallery-item">
+                <div class="gallery-item" onclick="scrollToProducts('NAM')">
                     <img src="https://jadeblue.com/cdn/shop/articles/mens_summer_wear.jpg?v=1714380887&width=1100" alt="Phong cách nam">
+                    <div class="gallery-overlay">
+                        <h4>Thời trang Nam</h4>
+                        <p>Khám phá ngay <i class="fas fa-arrow-right"></i></p>
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=1920" alt="Đỉnh cao công nghệ">
+                <div class="gallery-item" onclick="scrollToProducts('CÔNG NGHỆ')">
+                    <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=1920" alt="Công nghệ">
+                    <div class="gallery-overlay">
+                        <h4>Đồ Công Nghệ</h4>
+                        <p>Khám phá ngay <i class="fas fa-arrow-right"></i></p>
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1920" alt="Bước chân năng động">
+                <div class="gallery-item" onclick="scrollToProducts('NỮ')">
+                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1920" alt="Thời trang nữ">
+                    <div class="gallery-overlay">
+                        <h4>Thời trang Nữ</h4>
+                        <p>Khám phá ngay <i class="fas fa-arrow-right"></i></p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" onclick="scrollToProducts('GIÀY TÚI')">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1920" alt="Giày túi">
+                    <div class="gallery-overlay">
+                        <h4>Phụ kiện Giày & Túi</h4>
+                        <p>Khám phá ngay <i class="fas fa-arrow-right"></i></p>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="scrollToProducts('GIA DỤNG')">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1920" alt="Gia dụng thông minh">
+                    <div class="gallery-overlay">
+                        <h4>Gia dụng Thông minh</h4>
+                        <p>Khám phá ngay <i class="fas fa-arrow-right"></i></p>
+                    </div>
                 </div>
             </div>
         </section>
-        
     </main>
+
+    <footer class="footer-dark">
+        <div class="container">
+            <div class="footer-features">
+                <div class="feature-item">
+                    <i class="fas fa-box"></i>
+                    <div class="feature-text">
+                        <h4>MIỄN PHÍ SHIP</h4>
+                        <p>Toàn quốc</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="feature-text">
+                        <h4>BẢO HÀNH</h4>
+                        <p>365 ngày</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-store"></i>
+                    <div class="feature-text">
+                        <h4>ĐỊA CHỈ</h4>
+                        <p>Cửa hàng Blue Ultra</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-book-open"></i>
+                    <div class="feature-text">
+                        <h4>TẠP CHÍ</h4>
+                        <p>Thông tin thời trang</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>SẢN PHẨM CHÍNH</h4>
+                    <ul>
+                        <li><a onclick="scrollToProducts('CÔNG NGHỆ')">Đồ Công Nghệ</a></li>
+                        <li><a onclick="scrollToProducts('NAM')">Thời Trang Nam</a></li>
+                        <li><a onclick="scrollToProducts('NỮ')">Thời Trang Nữ</a></li>
+                        <li><a onclick="scrollToProducts('GIÀY TÚI')">Giày & Túi Xách</a></li>
+                        <li><a onclick="scrollToProducts('GIA DỤNG')">Thiết Bị Gia Dụng</a></li>
+                        <li><a onclick="scrollToProducts('ALL')">Tất Cả Sản Phẩm</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>CHÍNH SÁCH</h4>
+                    <ul>
+                        <li><a onclick="showInfoModal('Chính sách khách hàng', 'Blue Ultra cam kết bảo vệ quyền lợi của khách hàng bằng những chính sách ưu việt nhất. Khách hàng thân thiết sẽ được tích điểm và nhận ưu đãi độc quyền lên đến 30% vào các dịp sinh nhật hoặc lễ tết.')">Chính sách khách hàng</a></li>
+                        <li><a onclick="showInfoModal('Vận chuyển & Giao nhận', 'Giao hàng hỏa tốc trong nội thành chỉ từ 2-4 tiếng. Giao hàng toàn quốc từ 2-4 ngày làm việc. Miễn phí toàn bộ phí vận chuyển cho các đơn hàng có giá trị trên 500.000đ.')">Vận chuyển & Giao nhận</a></li>
+                        <li><a onclick="showInfoModal('Chính sách bảo mật', 'Chúng tôi tôn trọng và bảo vệ thông tin cá nhân của bạn. Mọi dữ liệu giao dịch đều được mã hóa theo tiêu chuẩn SSL quốc tế. Blue Ultra cam kết không bán hoặc chia sẻ thông tin của bạn cho bên thứ ba.')">Chính sách bảo mật</a></li>
+                        <li><a onclick="showInfoModal('Thanh toán an toàn', 'Hỗ trợ đa dạng phương thức thanh toán: Thanh toán khi nhận hàng (COD), Chuyển khoản ngân hàng, Quẹt thẻ, và thanh toán qua các ví điện tử phổ biến như Momo, ZaloPay.')">Thanh toán an toàn</a></li>
+                        <li><a onclick="showInfoModal('Đổi trả linh hoạt', 'Bạn có quyền yêu cầu đổi hoặc trả hàng trong vòng 15 ngày kể từ ngày nhận nếu sản phẩm có lỗi từ nhà sản xuất hoặc không đúng kích cỡ. Quá trình đổi trả diễn ra tận nhà hoàn toàn miễn phí.')">Đổi trả linh hoạt</a></li>
+                        <li><a onclick="showInfoModal('Chế độ bảo hành', 'Các sản phẩm công nghệ được bảo hành chính hãng 12 tháng. Đồ gia dụng bảo hành 24 tháng. Thời trang và phụ kiện được hỗ trợ sửa chữa trọn đời (đứt chỉ, hỏng khóa).')">Chế độ bảo hành</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>VỀ BLUE ULTRA</h4>
+                    <ul>
+                        <li><a onclick="showInfoModal('Giới thiệu thương hiệu', 'Blue Ultra được thành lập vào năm 2026 với tầm nhìn trở thành thương hiệu tiên phong kết hợp giữa Thời Trang Đường Phố (Streetwear) và Công Nghệ Hiện Đại (Tech). Chúng tôi không chỉ bán quần áo, chúng tôi bán một phong cách sống tối giản nhưng đầy quyền lực.')">Giới thiệu thương hiệu</a></li>
+                        <li><a onclick="showInfoModal('Thông tin bộ sưu tập', 'Các bộ sưu tập của Blue Ultra được ra mắt theo 2 mùa chính: Xuân Hè và Thu Đông. Mỗi bộ sưu tập là sự nghiên cứu kỹ lưỡng về chất liệu tản nhiệt, chống nước và thiết kế tối ưu chuyển động.')">Thông tin bộ sưu tập</a></li>
+                        <li><a onclick="showInfoModal('Kiến thức công nghệ', 'Góc chia sẻ những thủ thuật sử dụng thiết bị công nghệ hiệu quả, review chi tiết các dòng máy mới và cập nhật xu hướng công nghệ tương lai tác động đến đời sống.')">Kiến thức công nghệ</a></li>
+                        <li><a onclick="showInfoModal('Hướng dẫn mặc đẹp', 'Cẩm nang phối đồ dành riêng cho giới trẻ. Từ cách chọn màu sắc, mix-match layer cho đến việc lựa chọn phụ kiện sao cho tôn lên cá tính cá nhân nhất.')">Hướng dẫn mặc đẹp</a></li>
+                        <li><a onclick="showInfoModal('Hệ thống cửa hàng', 'Hiện tại Blue Ultra đang có 5 Flagship Store tại trung tâm TP.HCM và Hà Nội. Không gian cửa hàng được thiết kế theo phong cách Cyberpunk, mang lại trải nghiệm mua sắm độc đáo.')">Hệ thống cửa hàng</a></li>
+                        <li><a onclick="showInfoModal('Tuyển dụng', 'Gia nhập đội ngũ Blue Ultra ngay hôm nay! Chúng tôi luôn tìm kiếm những tài năng trẻ ở các vị trí: Marketing, Designer, Sales, và IT Support. Môi trường làm việc năng động và phúc lợi hấp dẫn.')">Tuyển dụng</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>KẾT NỐI VỚI CHÚNG TÔI</h4>
+                    <p style="color: #888; font-size: 0.95rem; margin-bottom: 15px; line-height: 1.5;">Tham gia cộng đồng Blue Ultra để nhận những ưu đãi và xu hướng mới nhất.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                &copy; 2026 Blue Ultra Tech Fashion. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div class="info-modal-overlay" id="infoModalOverlay" onclick="closeInfoModal(event)">
+        <div class="info-modal-content" onclick="event.stopPropagation()">
+            <button class="close-modal-btn" onclick="closeInfoModal(event)"><i class="fas fa-times"></i></button>
+            <h2 id="modalTitle">Tiêu đề</h2>
+            <div id="modalBody">
+                Nội dung chi tiết sẽ được hiển thị ở đây...
+            </div>
+        </div>
+    </div>
 
     <div id="toast-container"></div>
 
@@ -347,6 +691,20 @@
             } else {
                 themeBtn.innerHTML = '<i class="fas fa-moon"></i>'; 
             }
+        }
+
+        // ==========================================
+        // HIỂN THỊ MODAL THÔNG TIN TỪ FOOTER (TÍNH NĂNG MỚI)
+        // ==========================================
+        function showInfoModal(title, content) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalBody').innerHTML = `<p>${content}</p>`;
+            document.getElementById('infoModalOverlay').classList.add('active');
+        }
+
+        function closeInfoModal(e) {
+            if(e) e.preventDefault();
+            document.getElementById('infoModalOverlay').classList.remove('active');
         }
 
         // ==========================================
