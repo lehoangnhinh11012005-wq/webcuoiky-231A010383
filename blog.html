@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Tin Tức | Blue Ultra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* === GIỮ NGUYÊN CSS CƠ BẢN TỪ INDEX === */
+        :root {
+            --primary: #000000;
+            --primary-invert: #ffffff;
+            --bg-color: #ffffff;
+            --bg-alt: #f8f9fa;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --red: #ff3b30;
+            --font: 'Montserrat', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background-color: var(--bg-alt); color: var(--text-color); overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1250px; margin: 0 auto; padding: 0 20px; }
+        
+        /* TOPBAR & HEADER */
+        .topbar { background: var(--primary); color: #fff; padding: 8px 0; overflow: hidden; white-space: nowrap; font-size: 0.85rem; font-weight: 600; }
+        .marquee { display: inline-block; animation: marquee 20s linear infinite; }
+        .marquee span { margin-right: 50px; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        .header { position: sticky; top: 0; background: var(--bg-color); border-bottom: 1px solid var(--border-color); z-index: 1000; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .header-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 40px; }
+        .logo { font-size: 2rem; font-weight: 900; letter-spacing: -1px; display: flex; align-items: center; gap: 5px; color: var(--text-color); }
+        
+        .menu-row { display: flex; gap: 25px; align-items: center; }
+        .menu-row li { font-weight: 600; font-size: 0.95rem; text-transform: uppercase; cursor: pointer; transition: 0.3s; padding-bottom: 5px; position: relative; }
+        .menu-row li:hover { color: var(--red); }
+        .menu-row li.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--red); }
+
+        .icons { display: flex; align-items: center; gap: 20px; font-size: 1.3rem; }
+        .icon-btn { cursor: pointer; transition: var(--transition); position: relative; display: flex; align-items: center; }
+        .icon-btn:hover { color: var(--red); }
+        .badge { position: absolute; top: -8px; right: -10px; background: var(--red); color: #fff; font-size: 0.7rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+        /* === CSS RIÊNG CHO TRANG BLOG === */
+        .page-header { background: var(--primary); color: #fff; padding: 60px 0; text-align: center; margin-bottom: 50px; }
+        .page-title { font-size: 2.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+        .page-desc { font-size: 1.1rem; font-weight: 500; opacity: 0.8; }
+
+        .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 80px; }
+        
+        .blog-card { background: var(--bg-color); border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.02); transition: 0.3s; display: flex; flex-direction: column; cursor: pointer; }
+        .blog-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: var(--primary); }
+        .blog-card:hover .blog-img { transform: scale(1.05); }
+        
+        .blog-img-wrapper { overflow: hidden; height: 250px; width: 100%; }
+        .blog-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        
+        .blog-content { padding: 30px; display: flex; flex-direction: column; flex-grow: 1; }
+        .blog-meta { display: flex; justify-content: space-between; font-size: 0.85rem; color: #888; font-weight: 600; margin-bottom: 15px; text-transform: uppercase; }
+        .blog-cat { color: var(--red); }
+        
+        .blog-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 15px; line-height: 1.4; color: var(--primary); transition: 0.3s; }
+        .blog-card:hover .blog-title { color: var(--red); }
+        
+        .blog-excerpt { font-size: 0.95rem; color: #666; line-height: 1.6; margin-bottom: 25px; flex-grow: 1; }
+        
+        .btn-readmore { align-self: flex-start; padding: 10px 20px; background: transparent; color: var(--primary); border: 2px solid var(--primary); font-weight: 800; text-transform: uppercase; border-radius: 6px; transition: 0.3s; font-size: 0.85rem; }
+        .blog-card:hover .btn-readmore { background: var(--primary); color: #fff; }
+
+        @media (max-width: 900px) {
+            .blog-grid { grid-template-columns: repeat(2, 1fr); gap: 25px; }
+            .menu-row { display: none; }
+        }
+        @media (max-width: 600px) {
+            .blog-grid { grid-template-columns: 1fr; }
+            .page-title { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <div class="marquee">
+            <span>🚀 CHÀO MỪNG ĐẾN VỚI BLUE ULTRA - LOCAL BRAND STREETWEAR HÀNG ĐẦU</span>
+            <span>🔥 MIỄN PHÍ GIAO HÀNG CHO ĐƠN TỪ 500K</span>
+            <span>📞 HOTLINE HỖ TRỢ: 0345541232</span>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo-area">
+                <a href="index.html" class="logo">BLUE ULTRA</a>
+                
+                <ul class="menu-row">
+                    <li><a href="index.html">TRANG CHỦ</a></li>
+                    <li><a href="index.html">SẢN PHẨM</a></li>
+                    <li class="active"><a href="blog.html">BLOG</a></li>
+                </ul>
+            </div>
+
+            <div class="icons">
+                <a href="wishlist.html" class="icon-btn" title="Yêu thích">
+                    <i class="far fa-heart"></i>
+                    <span class="badge" id="wishCountDisplay">0</span>
+                </a>
+                
+                <a href="cart.html" class="icon-btn" title="Giỏ hàng">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge" id="cartCountDisplay">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">TIN TỨC & XU HƯỚNG</h1>
+            <p class="page-desc">Cập nhật những thông tin mới nhất về công nghệ và thời trang đường phố.</p>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="blog-grid" id="blogRenderArea">
+            </div>
+    </main>
+
+    <script>
+        // 1. DỮ LIỆU BÀI VIẾT BLOG
+        const blogs = [
+            {
+                id: 1,
+                title: "Xu hướng Streetwear Xuân Hè 2026: Sự trỗi dậy của Techwear",
+                date: "06/03/2026",
+                cat: "FASHION",
+                img: "https://mialala.vn/media/lib/06-12-2022/batch_streetwear3im-93841.jpeg",
+                excerpt: "Phong cách đường phố năm nay đánh dấu sự kết hợp mạnh mẽ giữa tính ứng dụng cao và chất liệu công nghệ mới. Khám phá cách phối đồ cực chất cùng Blue Ultra."
+            },
+            {
+                id: 2,
+                title: "Đánh giá chi tiết Macbook Pro M3: Có xứng đáng để nâng cấp?",
+                date: "01/03/2026",
+                cat: "TECH REVIEW",
+                img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+                excerpt: "Cùng chúng tôi trên tay và trải nghiệm hiệu năng thực tế của siêu phẩm Apple mới nhất. Liệu con chip M3 có thực sự mang lại sức mạnh đột phá như lời đồn?"
+            },
+            {
+                id: 3,
+                title: "Top 5 đôi Sneaker phải có trong tủ đồ của giới trẻ hiện nay",
+                date: "25/02/2026",
+                cat: "SNEAKERS",
+                img: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=800",
+                excerpt: "Bạn đang phân vân không biết nên chọn đôi giày nào để thể hiện cá tính? Đây là danh sách 5 đôi sneaker dễ phối đồ và không bao giờ lỗi mốt."
+            },
+            {
+                id: 4,
+                title: "Bí quyết chọn mua Nồi Chiên Không Dầu phù hợp cho gia đình",
+                date: "18/02/2026",
+                cat: "SMART HOME",
+                img: "https://sunhouse.com.vn/pic/news/nen-mua-noi-chien-khong-dau-may-lit.jpg",
+                excerpt: "Nồi chiên không dầu dung tích bao nhiêu là đủ? Công suất nào sẽ giúp thức ăn chín đều? Bài viết này sẽ giúp bạn trở thành chuyên gia mua sắm đồ gia dụng."
+            },
+            {
+                id: 5,
+                title: "Màu sắc lên ngôi: Tone Titan bùng nổ trên các thiết bị công nghệ",
+                date: "10/02/2026",
+                cat: "TRENDS",
+                img: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800",
+                excerpt: "Từ smartphone cho đến laptop, chất liệu và màu sắc Titan đang trở thành tiêu chuẩn mới của sự sang trọng. Tại sao xu hướng này lại hot đến vậy?"
+            },
+            {
+                id: 6,
+                title: "Cách bảo quản áo khoác da luôn như mới sau nhiều năm sử dụng",
+                date: "05/02/2026",
+                cat: "TIPS & TRICKS",
+                img: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800",
+                excerpt: "Áo khoác da là một item đắt tiền nhưng lại rất dễ hỏng nếu không biết chăm sóc đúng cách. Lưu lại ngay 3 bước vệ sinh và bảo quản cực đơn giản này."
+            }
+        ];
+
+        // 2. RENDER GIAO DIỆN BLOG
+        function renderBlogs() {
+            const container = document.getElementById('blogRenderArea');
+            
+            container.innerHTML = blogs.map(b => `
+                <div class="blog-card">
+                    <div class="blog-img-wrapper">
+                        <img src="${b.img}" alt="${b.title}" class="blog-img">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-cat">${b.cat}</span>
+                            <span>${b.date}</span>
+                        </div>
+                        <h3 class="blog-title">${b.title}</h3>
+                        <p class="blog-excerpt">${b.excerpt}</p>
+                        <button class="btn-readmore">ĐỌC TIẾP</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 3. LOGIC CẬP NHẬT SỐ LƯỢNG TRÊN HEADER (ANTI-CRASH)
+        function getCart() { 
+            let rawCart = JSON.parse(localStorage.getItem("zenith_cart")) || [];
+            let cleanCart = rawCart.filter(item => item && typeof item.price === 'number' && !isNaN(item.price));
+            if(rawCart.length !== cleanCart.length) {
+                localStorage.setItem("zenith_cart", JSON.stringify(cleanCart));
+            }
+            return cleanCart;
+        }
+
+        function getWishlist() { 
+            return JSON.parse(localStorage.getItem("zenith_wishlist")) || []; 
+        }
+
+        function updateCounts() {
+            let validCart = getCart();
+            document.getElementById('cartCountDisplay').innerText = validCart.reduce((s,i) => s + (Number(i.qty) || 1), 0);
+            document.getElementById('wishCountDisplay').innerText = getWishlist().length;
+        }
+
+        // Khởi chạy
+        renderBlogs();
+        updateCounts();
+
+    </script>
+</body>
+</html>
