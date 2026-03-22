@@ -120,7 +120,7 @@
         .sort-box select { padding: 8px 15px; border: 1px solid var(--border-color); border-radius: 6px; font-family: var(--font); font-weight: 600; font-size: 0.9rem; background: var(--bg-color); color: var(--text-color); cursor: pointer; outline: none;}
         .sort-box select:hover { border-color: var(--primary); }
 
-        /* === 4. LƯỚI SẢN PHẨM & HIỆU ỨNG 3D === */
+        /* === 4. LƯỚI SẢN PHẨM === */
         .no-result { grid-column: 1 / -1; text-align: center; padding: 50px; font-size: 1.2rem; color: #888; font-weight: 600; }
 
         .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 80px; perspective: 1000px; }
@@ -278,7 +278,7 @@
         .gallery-overlay h4 { font-size: 1.5rem; font-weight: 900; margin-bottom: 5px; text-transform: uppercase; }
         .gallery-overlay p { font-size: 1rem; font-weight: 500; color: var(--red); text-transform: uppercase; letter-spacing: 1px;}
 
-        /* === 7. FOOTER NỀN ĐEN === */
+        /* === 7. FOOTER === */
         .footer-dark {
             background-color: #0b0b0b;
             color: #ffffff;
@@ -932,7 +932,6 @@
         // CẬP NHẬT: TÌM KIẾM, SẮP XẾP VÀ CHẠY ĐẾN ĐÚNG SẢN PHẨM
         // ==========================================
         
-        // Thêm tham số skipScroll để ngăn xung đột hiệu ứng cuộn
         function scrollToProducts(category, btnElement, skipScroll = false) {
             let menuItems = document.querySelectorAll('.menu-row li');
             menuItems.forEach(btn => btn.classList.remove('active'));
@@ -975,7 +974,7 @@
             }
         }
 
-        // HÀM MỚI: Tự động chạy đến chính xác sản phẩm bạn click từ Banner
+        // HÀM MỚI ĐƯỢC CHỈNH SỬA: Tự động cuộn VÀ click chọn tùy chọn đầu tiên
         function scrollToSpecificProduct(productId, category) {
             // Bước 1: Render danh mục tương ứng nhưng BỎ QUA lệnh cuộn chuột mặc định
             scrollToProducts(category, null, true); 
@@ -989,6 +988,14 @@
                     const offsetPosition = productCard.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
                     
                     window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+
+                    // --- ĐOẠN CODE THÊM MỚI Ở ĐÂY ---
+                    // Tự động tìm và bấm vào tuỳ chọn đầu tiên của thẻ sản phẩm đó
+                    const firstOptionPill = productCard.querySelector('.opt-pill');
+                    if (firstOptionPill) {
+                        firstOptionPill.click();
+                    }
+                    // -------------------------------
                     
                     // Hiệu ứng làm nổi bật (nhấp nháy viền đỏ) để khách hàng thấy dễ dàng
                     productCard.style.transition = 'all 0.5s ease';
