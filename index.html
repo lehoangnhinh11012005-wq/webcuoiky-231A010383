@@ -117,8 +117,50 @@
         /* === BỔ SUNG CSS PHẦN TIÊU ĐỀ & NÚT SẮP XẾP === */
         .section-header { display: flex; justify-content: space-between; align-items: center; margin: 20px 0 40px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; scroll-margin-top: 100px;}
         .section-title { font-size: 2rem; font-weight: 900; text-transform: uppercase; color: var(--primary); margin: 0;}
-        .sort-box select { padding: 8px 15px; border: 1px solid var(--border-color); border-radius: 6px; font-family: var(--font); font-weight: 600; font-size: 0.9rem; background: var(--bg-color); color: var(--text-color); cursor: pointer; outline: none;}
+        
+        /* FIX: VIẾT LẠI TOÀN BỘ CSS VÙNG CHỌN SẮP XẾP CHUẨN ĐA NỀN TẢNG */
+        .sort-box { 
+            position: relative; 
+            display: inline-block; 
+            min-width: 220px; 
+            z-index: 20; /* Đảm bảo luôn nằm trên các khối 3D */
+        }
+        .sort-box select { 
+            width: 100%;
+            appearance: none; /* Xóa mũi tên mặc định của Windows/Mac/iOS/Android */
+            -webkit-appearance: none; 
+            -moz-appearance: none; 
+            padding: 10px 40px 10px 15px; /* Tạo khoảng trống nhét mũi tên giả vào */
+            border: 1px solid var(--border-color); 
+            border-radius: 6px; 
+            font-family: var(--font); 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            cursor: pointer; 
+            outline: none; 
+            position: relative;
+            z-index: 10;
+            transition: var(--transition);
+        }
         .sort-box select:hover { border-color: var(--primary); }
+        .sort-box select:focus { border-color: var(--red); }
+        
+        /* Mũi tên giả (Fake Arrow) thay thế đồng nhất trên mọi máy */
+        .sort-box::after {
+            content: '\f107'; /* Icon FontAwesome */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            pointer-events: none; /* Xuyên thủng mũi tên để bấm trúng thẻ select ở dưới */
+            z-index: 15;
+            font-size: 1rem;
+        }
 
         /* === 4. LƯỚI SẢN PHẨM === */
         .no-result { grid-column: 1 / -1; text-align: center; padding: 50px; font-size: 1.2rem; color: #888; font-weight: 600; }
@@ -483,6 +525,9 @@
             .product-grid { grid-template-columns: repeat(2, 1fr); perspective: none; }
             .product-card { transform-style: flat; } 
             
+            /* Kéo giãn ô lựa chọn Sắp xếp trên màn hình nhỏ */
+            .sort-box { width: 100%; }
+
             .product-img, .product-info, .product-price, .btn-add, .wishlist-btn {
                 transform: none !important;
             }
@@ -929,7 +974,7 @@
         }
 
         // ==========================================
-        // CẬP NHẬT: TÌM KIẾM, SẮP XẾP VÀ CHẠY ĐẾN ĐÚNG SẢN PHẨM
+        // TÌM KIẾM, SẮP XẾP VÀ CHẠY ĐẾN ĐÚNG SẢN PHẨM
         // ==========================================
         
         function scrollToProducts(category, btnElement, skipScroll = false) {
@@ -974,12 +1019,9 @@
             }
         }
 
-        // HÀM MỚI ĐƯỢC CHỈNH SỬA: Tự động cuộn VÀ click chọn tùy chọn đầu tiên
         function scrollToSpecificProduct(productId, category) {
-            // Bước 1: Render danh mục tương ứng nhưng BỎ QUA lệnh cuộn chuột mặc định
             scrollToProducts(category, null, true); 
             
-            // Bước 2: Tìm thẻ sản phẩm đó và cuộn chuột thẳng tới nó
             setTimeout(() => {
                 const priceElement = document.getElementById(`price-display-${productId}`);
                 if(priceElement) {
@@ -989,15 +1031,11 @@
                     
                     window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
 
-                    // --- ĐOẠN CODE THÊM MỚI Ở ĐÂY ---
-                    // Tự động tìm và bấm vào tuỳ chọn đầu tiên của thẻ sản phẩm đó
                     const firstOptionPill = productCard.querySelector('.opt-pill');
                     if (firstOptionPill) {
                         firstOptionPill.click();
                     }
-                    // -------------------------------
                     
-                    // Hiệu ứng làm nổi bật (nhấp nháy viền đỏ) để khách hàng thấy dễ dàng
                     productCard.style.transition = 'all 0.5s ease';
                     productCard.style.transform = window.innerWidth > 900 ? 'scale(1.05)' : 'scale(1.02)';
                     productCard.style.boxShadow = '0 0 25px var(--red)';
@@ -1011,7 +1049,7 @@
                         productCard.style.zIndex = '';
                     }, 2000);
                 }
-            }, 50); // Timeout ngắn để tạo sự liền mạch
+            }, 50); 
         }
 
         function handleSortProducts() {
