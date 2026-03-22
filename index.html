@@ -118,37 +118,51 @@
         .section-header { display: flex; justify-content: space-between; align-items: center; margin: 20px 0 40px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; scroll-margin-top: 100px;}
         .section-title { font-size: 2rem; font-weight: 900; text-transform: uppercase; color: var(--primary); margin: 0;}
         
-        /* FIX: VIẾT LẠI TOÀN BỘ CSS VÙNG CHỌN SẮP XẾP CHUẨN ĐA NỀN TẢNG */
+        /* FIX: VIẾT LẠI TOÀN BỘ CSS VÙNG CHỌN SẮP XẾP CHUẨN ĐA NỀN TẢNG (Click vào đâu cũng mở) */
         .sort-box { 
             position: relative; 
             display: inline-block; 
             min-width: 220px; 
-            z-index: 20; /* Đảm bảo luôn nằm trên các khối 3D */
+            z-index: 20; 
         }
+
+        /* Khối chứa viền và nền giả để Select có thể đè lên hoàn toàn */
+        .sort-box-wrapper {
+            position: relative;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-color);
+            transition: var(--transition);
+            overflow: hidden; /* Cắt phần thẻ select tràn ra ngoài nếu có */
+        }
+        
+        .sort-box-wrapper:hover {
+            border-color: var(--primary);
+        }
+        .sort-box-wrapper:focus-within {
+             border-color: var(--red);
+        }
+
         .sort-box select { 
             width: 100%;
-            appearance: none; /* Xóa mũi tên mặc định của Windows/Mac/iOS/Android */
+            appearance: none; 
             -webkit-appearance: none; 
             -moz-appearance: none; 
-            padding: 10px 40px 10px 15px; /* Tạo khoảng trống nhét mũi tên giả vào */
-            border: 1px solid var(--border-color); 
-            border-radius: 6px; 
+            padding: 10px 40px 10px 15px; 
             font-family: var(--font); 
             font-weight: 600; 
             font-size: 0.9rem; 
-            background-color: var(--bg-color); 
+            background: transparent; /* Nền trong suốt để thấy nền của wrapper */
+            border: none; /* Bỏ viền của thẻ select, dùng viền của wrapper */
             color: var(--text-color); 
             cursor: pointer; 
             outline: none; 
             position: relative;
-            z-index: 10;
-            transition: var(--transition);
+            z-index: 10; /* Z-index cao hơn mũi tên để bắt click trên toàn bộ diện tích */
         }
-        .sort-box select:hover { border-color: var(--primary); }
-        .sort-box select:focus { border-color: var(--red); }
         
         /* Mũi tên giả (Fake Arrow) thay thế đồng nhất trên mọi máy */
-        .sort-box::after {
+        .sort-box-wrapper::after {
             content: '\f107'; /* Icon FontAwesome */
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
@@ -157,8 +171,8 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-color);
-            pointer-events: none; /* Xuyên thủng mũi tên để bấm trúng thẻ select ở dưới */
-            z-index: 15;
+            pointer-events: none; /* Mũi tên không nhận click, để lọt xuống thẻ select */
+            z-index: 5; /* Z-index thấp hơn select để không cản trở click */
             font-size: 1rem;
         }
 
@@ -663,11 +677,13 @@
             <h2 class="section-title" id="categoryTitle">TẤT CẢ SẢN PHẨM</h2>
             
             <div class="sort-box">
-                <select id="sortSelect" onchange="handleSortProducts()">
-                    <option value="default">Sắp xếp: Mặc định</option>
-                    <option value="price-asc">Giá: Từ Thấp đến Cao</option>
-                    <option value="price-desc">Giá: Từ Cao xuống Thấp</option>
-                </select>
+                <div class="sort-box-wrapper">
+                    <select id="sortSelect" onchange="handleSortProducts()">
+                        <option value="default">Sắp xếp: Mặc định</option>
+                        <option value="price-asc">Giá: Từ Thấp đến Cao</option>
+                        <option value="price-desc">Giá: Từ Cao xuống Thấp</option>
+                    </select>
+                </div>
             </div>
         </div>
         
