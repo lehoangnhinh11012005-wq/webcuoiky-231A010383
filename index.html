@@ -81,7 +81,7 @@
         
         .search-box { position: relative; display: flex; align-items: center; }
         .search-box input { width: 0; padding: 0; border: none; outline: none; background: transparent; font-family: var(--font); font-size: 0.9rem; transition: var(--transition); border-bottom: 1px solid transparent; color: var(--text-color); }
-        .search-box:hover input, .search-box input:focus { width: 200px; padding: 5px 10px; border-bottom: 1px solid var(--primary); }
+        .search-box:hover input, .search-box input:focus, .search-box input:not(:placeholder-shown) { width: 200px; padding: 5px 10px; border-bottom: 1px solid var(--primary); }
         .search-box i { cursor: pointer; margin-left: 5px; color: var(--text-color); transition: var(--transition); }
         .search-box:hover i { color: var(--red); }
 
@@ -93,10 +93,15 @@
         .theme-toggle { background: transparent; border: none; color: var(--text-color); font-size: 1.3rem; cursor: pointer; transition: var(--transition); display: flex; align-items: center; }
         .theme-toggle:hover { color: var(--red); }
 
+        /* MẶC ĐỊNH ẨN CÁC PHẦN TỬ CỦA MENU MOBILE TRÊN MÀN HÌNH LỚN */
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); margin-right: 15px; }
+        .close-menu-btn { display: none; }
+        .menu-overlay { display: none; }
+
         /* === 3. BANNER SLIDER CHUYỂN ĐỘNG === */
         .slider-wrapper { position: relative; height: 80vh; width: 100%; overflow: hidden; margin-bottom: 50px; }
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; z-index: 1; }
-        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; z-index: 1; cursor: pointer; /* Thêm con trỏ tay */ }
+        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2; pointer-events: none; /* FIX: Cho phép click xuyên qua lớp màng đen */ }
         .slide.active { opacity: 1; z-index: 3; }
         
         .slide-content { position: relative; z-index: 4; transform: translateY(20px); transition: 0.8s; }
@@ -109,9 +114,13 @@
         .slider-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: 0.3s; }
         .slider-dot.active { background: #fff; transform: scale(1.2); }
 
+        /* === BỔ SUNG CSS PHẦN TIÊU ĐỀ & NÚT SẮP XẾP === */
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin: 20px 0 40px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; scroll-margin-top: 100px;}
+        .section-title { font-size: 2rem; font-weight: 900; text-transform: uppercase; color: var(--primary); margin: 0;}
+        .sort-box select { padding: 8px 15px; border: 1px solid var(--border-color); border-radius: 6px; font-family: var(--font); font-weight: 600; font-size: 0.9rem; background: var(--bg-color); color: var(--text-color); cursor: pointer; outline: none;}
+        .sort-box select:hover { border-color: var(--primary); }
+
         /* === 4. LƯỚI SẢN PHẨM & HIỆU ỨNG 3D === */
-        .section-title { font-size: 2rem; font-weight: 900; text-transform: uppercase; text-align: center; margin: 20px 0 40px; color: var(--primary); scroll-margin-top: 100px; }
-        
         .no-result { grid-column: 1 / -1; text-align: center; padding: 50px; font-size: 1.2rem; color: #888; font-weight: 600; }
 
         .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 80px; perspective: 1000px; }
@@ -168,6 +177,48 @@
         .toast.error { border-left: 5px solid var(--red); }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes fadeOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+
+        /* === NÚT CUỘN LÊN ĐẦU TRANG === */
+        .floating-action { position: fixed; bottom: 30px; right: 30px; z-index: 9998; }
+        .float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary-invert); text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s; cursor: pointer; border: none; }
+        .scroll-top-btn { background-color: var(--primary); opacity: 0; visibility: hidden; pointer-events: none; transition: 0.4s; transform: translateY(20px);}
+        .scroll-top-btn.show { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);}
+        .scroll-top-btn:hover { background-color: var(--red); transform: translateY(-5px); }
+
+        /* === 9. BỔ SUNG CHATBOX TƯ VẤN & BÁO LỖI === */
+        .chat-widget { position: fixed; bottom: 90px; right: 30px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; }
+        .chat-toggle-btn { width: 55px; height: 55px; border-radius: 50%; background: var(--primary); color: var(--primary-invert); font-size: 1.6rem; border: none; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
+        .chat-toggle-btn:hover { background: var(--red); transform: scale(1.1); color: #fff; }
+        .chat-box { width: 340px; max-width: calc(100vw - 40px); background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px var(--card-shadow-hover); overflow: hidden; transform: translateY(20px); opacity: 0; pointer-events: none; transition: all 0.3s ease; margin-bottom: 15px; display: flex; flex-direction: column; height: 420px; }
+        .chat-box.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        .chat-header { background: var(--primary); color: var(--primary-invert); padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
+        .chat-header button { background: none; border: none; color: var(--primary-invert); cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
+        .chat-header button:hover { color: var(--red); transform: rotate(90deg); }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; }
+        .chat-body::-webkit-scrollbar { width: 5px; }
+        .chat-body::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
+        
+        /* Hiển thị xuống dòng cho nội dung tư vấn */
+        .msg { max-width: 85%; padding: 10px 15px; border-radius: 15px; line-height: 1.5; word-wrap: break-word; white-space: pre-wrap; }
+        .bot-msg { background: var(--bg-alt); color: var(--text-color); border-bottom-left-radius: 2px; align-self: flex-start; border: 1px solid var(--border-color); }
+        .user-msg { background: var(--primary); color: var(--primary-invert); border-bottom-right-radius: 2px; align-self: flex-end; }
+        .msg img { max-width: 100%; border-radius: 8px; margin-top: 8px; border: 1px solid var(--border-color); } /* CSS cho ảnh tải lên */
+        
+        .quick-options { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
+        .quick-btn { background: transparent; border: 1px solid var(--primary); color: var(--text-color); padding: 8px 12px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; transition: 0.2s; text-align: left; font-family: var(--font); font-weight: 600;}
+        .quick-btn:hover { background: var(--primary); color: var(--primary-invert); }
+        
+        .chat-input { padding: 12px; border-top: 1px solid var(--border-color); display: flex; gap: 8px; background: var(--bg-color); align-items: center;}
+        
+        /* Chỉnh CSS nút attach ảnh */
+        .chat-input .attach-btn { background: var(--bg-alt); color: var(--text-color); border: 1px solid var(--border-color); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+        .chat-input .attach-btn:hover { background: var(--border-color); color: var(--primary); }
+        
+        .chat-input input[type="text"] { flex: 1; padding: 10px 15px; border: 1px solid var(--border-color); border-radius: 20px; outline: none; background: var(--bg-alt); color: var(--text-color); font-family: var(--font); transition: 0.3s;}
+        .chat-input input[type="text"]:focus { border-color: var(--primary); }
+        
+        .chat-input .send-btn { background: var(--primary); color: var(--primary-invert); border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;}
+        .chat-input .send-btn:hover { background: var(--red); color: #fff; }
 
         /* === 6. ABOUT / BANNER BOTTOM === */
         .about-section { text-align: center; margin: 40px 0 0; padding-top: 60px; border-top: 1px solid var(--border-color); padding-bottom: 60px; }
@@ -266,7 +317,7 @@
         .feature-text p {
             font-size: 0.9rem;
             color: #888;
-            margin: 0;
+            margin-bottom: 0;
             font-weight: 500;
         }
 
@@ -361,7 +412,7 @@
             position: relative;
             transform: scale(0.8) translateY(50px) rotateX(-20deg);
             opacity: 0;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Hiệu ứng nảy 3D */
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             perspective: 1000px;
         }
@@ -400,15 +451,52 @@
             overflow-y: auto;
             padding-right: 10px;
         }
-        /* Custom scrollbar cho modal */
         #modalBody::-webkit-scrollbar { width: 6px; }
         #modalBody::-webkit-scrollbar-track { background: var(--bg-alt); border-radius: 4px; }
         #modalBody::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
 
+        /* =========================================
+           TỐI ƯU HÓA HIỂN THỊ TRÊN ĐIỆN THOẠI (MOBILE)
+           ========================================= */
         @media (max-width: 900px) {
-            .menu-row { display: none; }
+            .mobile-toggle { display: block; }
+            .logo-area { gap: 10px; width: 100%; justify-content: flex-start; }
+            .logo { font-size: 1.5rem; flex-grow: 1; }
+            
+            .menu-row { 
+                position: fixed; top: 0; right: -100%; width: 260px; height: 100vh; 
+                background: var(--bg-color); flex-direction: column; align-items: flex-start; gap: 0;
+                padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); 
+                transition: right 0.4s ease; z-index: 10000; 
+            }
+            .menu-row.active { right: 0; } 
+            .menu-row li { width: 100%; border-bottom: 1px solid var(--border-color); padding: 15px 0; font-size: 1rem; }
+            .menu-row li.active::after { display: none; }
+            
+            .close-menu-btn { display: flex; justify-content: space-between; align-items: center; color: var(--red) !important; font-weight: 800; border-bottom: 2px solid var(--border-color) !important; padding-bottom: 20px !important; margin-bottom: 10px; }
+            
+            .menu-overlay {
+                display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.6); z-index: 9999; 
+                opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(2px);
+            }
+            .menu-overlay.active { opacity: 1; visibility: visible; }
+
             .product-grid { grid-template-columns: repeat(2, 1fr); perspective: none; }
             .product-card { transform-style: flat; } 
+            
+            /* ĐÂY LÀ ĐOẠN MÃ ĐÃ ĐƯỢC CHỈNH SỬA ĐỂ FIX LỖI 3D TRÊN MOBILE */
+            .product-img,
+            .product-info,
+            .product-price,
+            .btn-add,
+            .wishlist-btn {
+                transform: none !important;
+            }
+            .product-price.updated {
+                animation: popPriceMobile 0.3s ease !important;
+            }
+
             .slide-content h1 { font-size: 2.8rem; }
             .about-gallery { grid-template-columns: repeat(2, 1fr); }
             .gallery-item:nth-child(n) { grid-column: span 1; height: 300px; }
@@ -416,12 +504,24 @@
             .footer-features { flex-wrap: wrap; gap: 30px; }
             .feature-item { width: 45%; }
             .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            
+            /* FIX: Căn lại nút Chat và Scroll to Top để không đè lên nút "Thêm vào giỏ" */
+            .chat-widget { bottom: 65px; right: 15px; transform: scale(0.85); transform-origin: bottom right;} 
+            .floating-action { bottom: 15px; right: 15px; transform: scale(0.75); transform-origin: bottom right;}
         }
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: 1fr; }
             .about-gallery { grid-template-columns: 1fr; }
             .feature-item { width: 100%; }
             .footer-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Keyframe mới tối ưu cho điện thoại */
+        @keyframes popPriceMobile {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); color: var(--primary); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -438,15 +538,24 @@
     <header class="header" id="mainHeader">
         <div class="container header-container">
             <div class="logo-area">
+                <i class="fas fa-bars mobile-toggle" onclick="toggleMobileMenu()"></i>
+
                 <a href="index.html" class="logo">BLUE ULTRA</a>
                 
-                <ul class="menu-row" id="filterMenu">
-                    <li class="active" onclick="scrollToProducts('ALL', this)">TẤT CẢ SẢN PHẨM</li>
-                    <li onclick="scrollToProducts('CÔNG NGHỆ', this)">CÔNG NGHỆ</li>
-                    <li onclick="scrollToProducts('NAM', this)">NAM</li>
-                    <li onclick="scrollToProducts('NỮ', this)">NỮ</li>
-                    <li onclick="scrollToProducts('GIÀY TÚI', this)">GIÀY TÚI</li>
-                    <li onclick="scrollToProducts('GIA DỤNG', this)">GIA DỤNG</li>
+                <div class="menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
+
+                <ul class="menu-row" id="mainMenu">
+                    <li class="close-menu-btn" onclick="toggleMobileMenu()">
+                        <span>MENU</span> <i class="fas fa-times" style="font-size: 1.5rem;"></i>
+                    </li>
+                    <li class="active" onclick="scrollToProducts('ALL', this); if(window.innerWidth<=900) toggleMobileMenu();">TẤT CẢ SẢN PHẨM</li>
+                    <li onclick="scrollToProducts('CÔNG NGHỆ', this); if(window.innerWidth<=900) toggleMobileMenu();">CÔNG NGHỆ</li>
+                    <li onclick="scrollToProducts('NAM', this); if(window.innerWidth<=900) toggleMobileMenu();">NAM</li>
+                    <li onclick="scrollToProducts('NỮ', this); if(window.innerWidth<=900) toggleMobileMenu();">NỮ</li>
+                    <li onclick="scrollToProducts('GIÀY TÚI', this); if(window.innerWidth<=900) toggleMobileMenu();">GIÀY TÚI</li>
+                    <li onclick="scrollToProducts('GIA DỤNG', this); if(window.innerWidth<=900) toggleMobileMenu();">GIA DỤNG</li>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="orders.html">ĐƠN HÀNG</a></li>
                 </ul>
             </div>
 
@@ -474,46 +583,57 @@
     </header>
 
     <div class="slider-wrapper">
-        <div class="slide active" style="background-image: url('https://replicate.delivery/xpbkg/H88K9B602D50C43D42C67B6B0E09995543D69F393D356A49/output.png');">
+        <div class="slide active" style="background-image: url('https://replicate.delivery/xpbkg/H88K9B602D50C43D42C67B6B0E09995543D69F393D356A49/output.png');" onclick="scrollToProducts('ALL')">
             <div class="slide-content">
                 <h1>BỘ SƯU TẬP MỚI NHẤT</h1>
-                <button class="btn-shop" onclick="scrollToProducts('ALL')">MUA NGAY</button>
+                <button class="btn-shop">MUA NGAY</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=1920');">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=1920');" onclick="scrollToProducts('CÔNG NGHỆ')">
             <div class="slide-content">
                 <h1>ĐỈNH CAO CÔNG NGHỆ</h1>
-                <button class="btn-shop" onclick="scrollToProducts('CÔNG NGHỆ')">KHÁM PHÁ</button>
+                <button class="btn-shop">KHÁM PHÁ</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://jadeblue.com/cdn/shop/articles/mens_summer_wear.jpg?v=1714380887&width=1100');">
+        <div class="slide" style="background-image: url('https://jadeblue.com/cdn/shop/articles/mens_summer_wear.jpg?v=1714380887&width=1100');" onclick="scrollToProducts('NAM')">
             <div class="slide-content">
                 <h1>PHONG CÁCH PHÁI MẠNH</h1>
-                <button class="btn-shop" onclick="scrollToProducts('NAM')">PHONG CÁCH NAM</button>
+                <button class="btn-shop">PHONG CÁCH NAM</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1920');">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1920');" onclick="scrollToProducts('NỮ')">
             <div class="slide-content">
                 <h1>NÉT ĐẸP QUYẾN RŨ</h1>
-                <button class="btn-shop" onclick="scrollToProducts('NỮ')">THỜI TRANG NỮ</button>
+                <button class="btn-shop">THỜI TRANG NỮ</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1920');">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1920');" onclick="scrollToProducts('GIÀY TÚI')">
             <div class="slide-content">
                 <h1>BƯỚC CHÂN NĂNG ĐỘNG</h1>
-                <button class="btn-shop" onclick="scrollToProducts('GIÀY TÚI')">XEM CHI TIẾT</button>
+                <button class="btn-shop">XEM CHI TIẾT</button>
             </div>
         </div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1920');">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1920');" onclick="scrollToProducts('GIA DỤNG')">
             <div class="slide-content">
                 <h1>TIỆN ÍCH THÔNG MINH</h1>
-                <button class="btn-shop" onclick="scrollToProducts('GIA DỤNG')">ĐỒ GIA DỤNG</button>
+                <button class="btn-shop">ĐỒ GIA DỤNG</button>
             </div>
         </div>
     </div>
 
     <main class="container">
-        <h2 class="section-title" id="categoryTitle">TẤT CẢ SẢN PHẨM</h2>
+        
+        <div class="section-header" id="categoryTitleArea">
+            <h2 class="section-title" id="categoryTitle">TẤT CẢ SẢN PHẨM</h2>
+            
+            <div class="sort-box">
+                <select id="sortSelect" onchange="handleSortProducts()">
+                    <option value="default">Sắp xếp: Mặc định</option>
+                    <option value="price-asc">Giá: Từ Thấp đến Cao</option>
+                    <option value="price-desc">Giá: Từ Cao xuống Thấp</option>
+                </select>
+            </div>
+        </div>
         
         <div class="product-grid" id="productGrid">
             </div>
@@ -523,7 +643,7 @@
             <p class="about-desc">
                 Blue Ultra không chỉ bán sản phẩm, chúng tôi mang đến một phong cách sống:<br>
                 <strong>Mặc Chất – Sống Thông Minh – Bứt Phá Giới Hạn.</strong><br><br>
-                Sự kết hợp hoàn hảo giữa những thiết bị công nghệ tiên tiến và bộ sưu tập streetwear đậm chất riêng. Chúng tôi thiết kế trải nghiệm tối ưu dành cho người Việt, giúp bạn luôn sẵn sàng, linh hoạt và tỏa sáng trong mọi khoảnh khắc.
+                Sự kết hợp hoàn hảo giữa những thiết bị công nghệ tiên tiến và bộ sưu tập streetwear đậm chất riêng.
             </p>
             
             <h3 class="about-subtitle">Trạm Phong Cách</h3>
@@ -618,28 +738,24 @@
                 <div class="footer-col">
                     <h4>CHÍNH SÁCH</h4>
                     <ul>
-                        <li><a onclick="showInfoModal('Chính sách khách hàng', 'Blue Ultra cam kết bảo vệ quyền lợi của khách hàng bằng những chính sách ưu việt nhất. Khách hàng thân thiết sẽ được tích điểm và nhận ưu đãi độc quyền lên đến 30% vào các dịp sinh nhật hoặc lễ tết.')">Chính sách khách hàng</a></li>
-                        <li><a onclick="showInfoModal('Vận chuyển & Giao nhận', 'Giao hàng hỏa tốc trong nội thành chỉ từ 2-4 tiếng. Giao hàng toàn quốc từ 2-4 ngày làm việc. Miễn phí toàn bộ phí vận chuyển cho các đơn hàng có giá trị trên 500.000đ.')">Vận chuyển & Giao nhận</a></li>
-                        <li><a onclick="showInfoModal('Chính sách bảo mật', 'Chúng tôi tôn trọng và bảo vệ thông tin cá nhân của bạn. Mọi dữ liệu giao dịch đều được mã hóa theo tiêu chuẩn SSL quốc tế. Blue Ultra cam kết không bán hoặc chia sẻ thông tin của bạn cho bên thứ ba.')">Chính sách bảo mật</a></li>
-                        <li><a onclick="showInfoModal('Thanh toán an toàn', 'Hỗ trợ đa dạng phương thức thanh toán: Thanh toán khi nhận hàng (COD), Chuyển khoản ngân hàng, Quẹt thẻ, và thanh toán qua các ví điện tử phổ biến như Momo, ZaloPay.')">Thanh toán an toàn</a></li>
-                        <li><a onclick="showInfoModal('Đổi trả linh hoạt', 'Bạn có quyền yêu cầu đổi hoặc trả hàng trong vòng 15 ngày kể từ ngày nhận nếu sản phẩm có lỗi từ nhà sản xuất hoặc không đúng kích cỡ. Quá trình đổi trả diễn ra tận nhà hoàn toàn miễn phí.')">Đổi trả linh hoạt</a></li>
-                        <li><a onclick="showInfoModal('Chế độ bảo hành', 'Các sản phẩm công nghệ được bảo hành chính hãng 12 tháng. Đồ gia dụng bảo hành 24 tháng. Thời trang và phụ kiện được hỗ trợ sửa chữa trọn đời (đứt chỉ, hỏng khóa).')">Chế độ bảo hành</a></li>
+                        <li><a onclick="showInfoModal('Chính sách khách hàng', 'Blue Ultra cam kết bảo vệ quyền lợi của khách hàng bằng những chính sách ưu việt nhất.')">Chính sách khách hàng</a></li>
+                        <li><a onclick="showInfoModal('Vận chuyển & Giao nhận', 'Giao hàng hỏa tốc trong nội thành chỉ từ 2-4 tiếng. Miễn phí vận chuyển cho đơn hàng trên 500k.')">Vận chuyển & Giao nhận</a></li>
+                        <li><a onclick="showInfoModal('Chính sách bảo mật', 'Chúng tôi tôn trọng và bảo vệ thông tin cá nhân của bạn theo tiêu chuẩn SSL quốc tế.')">Chính sách bảo mật</a></li>
+                        <li><a onclick="showInfoModal('Thanh toán an toàn', 'Hỗ trợ thanh toán khi nhận hàng (COD), Chuyển khoản, Momo, ZaloPay.')">Thanh toán an toàn</a></li>
+                        <li><a onclick="showInfoModal('Đổi trả linh hoạt', 'Đổi hoặc trả hàng trong vòng 15 ngày hoàn toàn miễn phí.')">Đổi trả linh hoạt</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>VỀ BLUE ULTRA</h4>
                     <ul>
-                        <li><a onclick="showInfoModal('Giới thiệu thương hiệu', 'Blue Ultra được thành lập vào năm 2026 với tầm nhìn trở thành thương hiệu tiên phong kết hợp giữa Thời Trang Đường Phố (Streetwear) và Công Nghệ Hiện Đại (Tech). Chúng tôi không chỉ bán quần áo, chúng tôi bán một phong cách sống tối giản nhưng đầy quyền lực.')">Giới thiệu thương hiệu</a></li>
-                        <li><a onclick="showInfoModal('Thông tin bộ sưu tập', 'Các bộ sưu tập của Blue Ultra được ra mắt theo 2 mùa chính: Xuân Hè và Thu Đông. Mỗi bộ sưu tập là sự nghiên cứu kỹ lưỡng về chất liệu tản nhiệt, chống nước và thiết kế tối ưu chuyển động.')">Thông tin bộ sưu tập</a></li>
-                        <li><a onclick="showInfoModal('Kiến thức công nghệ', 'Góc chia sẻ những thủ thuật sử dụng thiết bị công nghệ hiệu quả, review chi tiết các dòng máy mới và cập nhật xu hướng công nghệ tương lai tác động đến đời sống.')">Kiến thức công nghệ</a></li>
-                        <li><a onclick="showInfoModal('Hướng dẫn mặc đẹp', 'Cẩm nang phối đồ dành riêng cho giới trẻ. Từ cách chọn màu sắc, mix-match layer cho đến việc lựa chọn phụ kiện sao cho tôn lên cá tính cá nhân nhất.')">Hướng dẫn mặc đẹp</a></li>
-                        <li><a onclick="showInfoModal('Hệ thống cửa hàng', 'Hiện tại Blue Ultra đang có 5 Flagship Store tại trung tâm TP.HCM và Hà Nội. Không gian cửa hàng được thiết kế theo phong cách Cyberpunk, mang lại trải nghiệm mua sắm độc đáo.')">Hệ thống cửa hàng</a></li>
-                        <li><a onclick="showInfoModal('Tuyển dụng', 'Gia nhập đội ngũ Blue Ultra ngay hôm nay! Chúng tôi luôn tìm kiếm những tài năng trẻ ở các vị trí: Marketing, Designer, Sales, và IT Support. Môi trường làm việc năng động và phúc lợi hấp dẫn.')">Tuyển dụng</a></li>
+                        <li><a onclick="showInfoModal('Giới thiệu thương hiệu', 'Blue Ultra kết hợp giữa Thời Trang Đường Phố (Streetwear) và Công Nghệ Hiện Đại (Tech).')">Giới thiệu thương hiệu</a></li>
+                        <li><a onclick="showInfoModal('Hệ thống cửa hàng', '5 Flagship Store tại TP.HCM và Hà Nội theo phong cách Cyberpunk.')">Hệ thống cửa hàng</a></li>
+                        <li><a onclick="showInfoModal('Tuyển dụng', 'Gia nhập đội ngũ Blue Ultra ngay hôm nay!')">Tuyển dụng</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>KẾT NỐI VỚI CHÚNG TÔI</h4>
-                    <p style="color: #888; font-size: 0.95rem; margin-bottom: 15px; line-height: 1.5;">Tham gia cộng đồng Blue Ultra để nhận những ưu đãi và xu hướng mới nhất.</p>
+                    <p style="color: #888; font-size: 0.95rem; margin-bottom: 15px; line-height: 1.5;">Tham gia cộng đồng Blue Ultra để nhận ưu đãi.</p>
                     <div class="social-icons">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-tiktok"></i></a>
@@ -655,13 +771,39 @@
         </div>
     </footer>
 
+    <div class="floating-action">
+        <button class="float-btn scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" title="Lên đầu trang"><i class="fas fa-arrow-up"></i></button>
+    </div>
+
+    <div class="chat-widget">
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                <span><i class="fas fa-headset"></i> CSKH Blue Ultra</span>
+                <button onclick="toggleChat()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="msg bot-msg">Xin chào! Blue Ultra có thể giúp gì cho bạn hôm nay?</div>
+                <div class="quick-options" id="quickOptionsContainer">
+                    <button class="quick-btn" onclick="sendQuickAction('size_color')">📏 Tư vấn Size & Màu sắc</button>
+                    <button class="quick-btn" onclick="sendQuickAction('report_bug')">⚠️ Phản ánh lỗi Website/App</button>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="file" id="chatFileInput" accept="image/*" style="display: none;" onchange="handleChatFileUpload(event)">
+                <button class="attach-btn" onclick="document.getElementById('chatFileInput').click()" title="Đính kèm hình ảnh"><i class="fas fa-paperclip"></i></button>
+                
+                <input type="text" id="chatInputMsg" placeholder="Nhập tin nhắn..." onkeypress="handleChatEnter(event)">
+                <button class="send-btn" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <button class="chat-toggle-btn" onclick="toggleChat()" title="Chat với hỗ trợ"><i class="fas fa-comment-dots"></i></button>
+    </div>
+
     <div class="info-modal-overlay" id="infoModalOverlay" onclick="closeInfoModal(event)">
         <div class="info-modal-content" onclick="event.stopPropagation()">
             <button class="close-modal-btn" onclick="closeInfoModal(event)"><i class="fas fa-times"></i></button>
             <h2 id="modalTitle">Tiêu đề</h2>
-            <div id="modalBody">
-                Nội dung chi tiết sẽ được hiển thị ở đây...
-            </div>
+            <div id="modalBody"></div>
         </div>
     </div>
 
@@ -669,7 +811,7 @@
 
     <script>
         // ==========================================
-        // 0. CHẾ ĐỘ SÁNG TỐI (DARK/LIGHT MODE)
+        // 0. CHẾ ĐỘ SÁNG TỐI
         // ==========================================
         const themeBtn = document.getElementById('themeToggleBtn');
         const rootElement = document.documentElement;
@@ -693,9 +835,11 @@
             }
         }
 
-        // ==========================================
-        // HIỂN THỊ MODAL THÔNG TIN TỪ FOOTER (TÍNH NĂNG MỚI)
-        // ==========================================
+        function toggleMobileMenu() {
+            document.getElementById('mainMenu').classList.toggle('active');
+            document.getElementById('menuOverlay').classList.toggle('active');
+        }
+
         function showInfoModal(title, content) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalBody').innerHTML = `<p>${content}</p>`;
@@ -708,25 +852,21 @@
         }
 
         // ==========================================
-        // 1. DỮ LIỆU SẢN PHẨM
+        // 1. DỮ LIỆU SẢN PHẨM & RENDER
         // ==========================================
         const products = [
             { id:"h1", cat:"GIA DỤNG", name:"Máy Xay Sinh Tố", price:890000, img:"https://images.unsplash.com/photo-1585515320310-259814833e62?w=800", options: { type: 'Dung tích', items: [{ label: '1.5 Lít', price: 890000 }, { label: '2 Lít', price: 1190000 }] } },
             { id:"h2", cat:"GIA DỤNG", name:"Nồi Chiên Không Dầu", price:1750000, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbJX3T0S4QlhyT_IivqCxI4bEWb-ONIHtXoQ&s", options: { type: 'Dung tích', items: [{ label: '4.5 Lít', price: 1750000 }, { label: '6.5 Lít', price: 2350000 }] } },
             { id:"h3", cat:"GIA DỤNG", name:"Máy Lọc Không Khí", price:2450000, img:"https://th.bing.com/th/id/OIP.C3J02QHrsvvYZZiMQDcGWAHaE-?w=261&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" },
-            
             { id:"t1", cat:"CÔNG NGHỆ", name:"Macbook Pro M3", price:39990000, img:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800", options: { type: 'Màu sắc', items: [{label: 'Bạc'}, {label: 'Xám'}, {label: 'Đen'}] } },
             { id:"t2", cat:"CÔNG NGHỆ", name:"iPhone 15 Pro Max", price:29500000, img:"https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800", options: { type: 'Màu sắc', items: [{label: 'Titan Tự Nhiên'}, {label: 'Titan Xanh'}, {label: 'Titan Đen'}] } },
             { id:"t3", cat:"CÔNG NGHỆ", name:"Tai nghe Sony WH1000XM5", price:7490000, img:"https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800", options: { type: 'Màu sắc', items: [{label: 'Đen'}, {label: 'Bạc'}] } },
-            
             { id:"m1", cat:"NAM", name:"Áo Polo Nam", price:350000, img:"https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800", options: { type: 'Size', items: [{label: 'S'}, {label: 'M'}, {label: 'L'}, {label: 'XL'}] } },
             { id:"m2", cat:"NAM", name:"Quần Tây Nam", price:420000, img:"https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800", options: { type: 'Size', items: [{label: '29'}, {label: '30'}, {label: '31'}, {label: '32'}] } },
             { id:"m3", cat:"NAM", name:"Áo Khoác Da Nam", price:1250000, img:"https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800", options: { type: 'Size', items: [{label: 'M'}, {label: 'L'}, {label: 'XL'}] } },
-            
             { id:"w1", cat:"NỮ", name:"Váy Lụa Nữ", price:850000, img:"https://kenh14cdn.com/203336854389633024/2022/4/7/allure-2x--sage-16493076836122039033757.jpg", options: { type: 'Size', items: [{label: 'S'}, {label: 'M'}, {label: 'L'}] } },
             { id:"w2", cat:"NỮ", name:"Áo Sơ Mi Nữ", price:280000, img:"https://tse2.mm.bing.net/th/id/OIP.2ZgdAgWHGx1K7sVZbseGHwHaH_?pid=ImgDet&w=187&h=201&c=7&dpr=1.3&o=7&rm=3", options: { type: 'Size', items: [{label: 'S'}, {label: 'M'}, {label: 'L'}, {label: 'XL'}] } },
             { id:"w3", cat:"NỮ", name:"Chân Váy Tennis", price:220000, img:"https://images.unsplash.com/photo-1582142306909-195724d33ffc?w=800", options: { type: 'Size', items: [{label: 'S'}, {label: 'M'}] } },
-            
             { id:"s1", cat:"GIÀY TÚI", name:"Sneaker Đỏ", price:1100000, img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800", options: { type: 'Size', items: [{label: '39'}, {label: '40'}, {label: '41'}, {label: '42'}, {label: '43'}] } },
             { id:"s2", cat:"GIÀY TÚI", name:"Balo Laptop", price:450000, img:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800", options: { type: 'Màu sắc', items: [{label: 'Đen'}, {label: 'Xám'}, {label: 'Xanh Navy'}] } },
             { id:"s3", cat:"GIÀY TÚI", name:"Túi Xách Mini", price:650000, img:"https://img.websosanh.vn/v10/users/review/images/nrkfqhbhys5fd/tui-xach-mini.jpg?compress=85" }
@@ -734,9 +874,6 @@
 
         function formatPrice(price) { return (Number(price) || 0).toLocaleString("vi-VN") + " đ"; }
 
-        // ==========================================
-        // SLIDER TỰ ĐỘNG
-        // ==========================================
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
         setInterval(() => {
@@ -745,53 +882,10 @@
             slides[currentSlide].classList.add('active');
         }, 4000);
 
-        // ==========================================
-        // CUỘN TỪ HEADER HOẶC BANNER XUỐNG SẢN PHẨM
-        // ==========================================
-        function scrollToProducts(category, btnElement) {
-            let menuItems = document.querySelectorAll('.menu-row li');
-            
-            menuItems.forEach(btn => btn.classList.remove('active'));
-
-            if(btnElement) {
-                btnElement.classList.add('active');
-            } else {
-                let targetMenu = Array.from(menuItems).find(li => {
-                    if(category === 'ALL') return li.innerText === 'TẤT CẢ SẢN PHẨM';
-                    return li.innerText === category;
-                });
-                if(targetMenu) targetMenu.classList.add('active');
-            }
-
-            document.getElementById('searchInput').value = '';
-            document.getElementById('categoryTitle').innerText = category === 'ALL' ? 'TẤT CẢ SẢN PHẨM' : category;
-
-            let filteredData = category === 'ALL' ? products : products.filter(item => item.cat === category); 
-            selectedOptions = {}; 
-            renderHTML(filteredData);
-
-            setTimeout(() => {
-                const titleSection = document.getElementById('categoryTitle');
-                const headerHeight = document.getElementById('mainHeader').offsetHeight;
-                
-                const elementPosition = titleSection.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }, 50);
-        }
-
-        // ==========================================
-        // 2. LOGIC RENDER VÀ CẬP NHẬT GIÁ
-        // ==========================================
         let selectedOptions = {}; 
-        let currentData = products;
+        let currentData = products; // Lưu trữ dữ liệu đang được lọc theo Category để dùng cho Sort
 
         function renderHTML(dataArray) {
-            currentData = dataArray;
             const grid = document.getElementById('productGrid');
             const wishList = getWishlist();
             
@@ -844,23 +938,128 @@
         }
 
         // ==========================================
-        // HIỆU ỨNG TILT 3D CHO CARD SẢN PHẨM BẰNG JS
+        // TÌM KIẾM VÀ SẮP XẾP SẢN PHẨM (ĐÃ SỬA LỖI SCROLL)
+        // ==========================================
+        function scrollToProducts(category, btnElement) {
+            let menuItems = document.querySelectorAll('.menu-row li');
+            menuItems.forEach(btn => btn.classList.remove('active'));
+
+            if(btnElement) {
+                btnElement.classList.add('active');
+            } else {
+                let targetMenu = Array.from(menuItems).find(li => {
+                    let text = li.textContent.trim();
+                    if(category === 'ALL') return text === 'TẤT CẢ SẢN PHẨM';
+                    return text.includes(category);
+                });
+                if(targetMenu) targetMenu.classList.add('active');
+            }
+
+            document.getElementById('searchInput').value = '';
+            document.getElementById('categoryTitle').innerText = category === 'ALL' ? 'TẤT CẢ SẢN PHẨM' : category;
+
+            document.getElementById('sortSelect').value = 'default';
+
+            let filteredData = category === 'ALL' ? products : products.filter(item => item.cat === category); 
+            selectedOptions = {}; 
+            currentData = filteredData; 
+            renderHTML(filteredData);
+
+            setTimeout(() => {
+                const titleSection = document.getElementById('categoryTitleArea');
+                if(titleSection) {
+                    const headerHeight = document.getElementById('mainHeader').offsetHeight || 80;
+                    const offsetPosition = titleSection.getBoundingClientRect().top + window.scrollY - headerHeight - 15;
+                    
+                    try {
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    } catch (err) {
+                        window.scrollTo(0, offsetPosition); // Fallback an toàn
+                    }
+                }
+            }, 200); 
+        }
+
+        function handleSortProducts() {
+            let sortValue = document.getElementById('sortSelect').value;
+            let dataToSort = [...currentData];
+
+            if (sortValue === 'price-asc') {
+                dataToSort.sort((a, b) => a.price - b.price);
+            } else if (sortValue === 'price-desc') {
+                dataToSort.sort((a, b) => b.price - a.price);
+            }
+
+            renderHTML(dataToSort);
+        }
+
+        function searchProducts(event) {
+            let keyword = event.target.value.toLowerCase().trim();
+            executeSearch(keyword);
+        }
+
+        function executeSearch(keyword) {
+            document.querySelectorAll('.menu-row li').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('sortSelect').value = 'default';
+
+            if (keyword !== '') {
+                document.getElementById('categoryTitle').innerText = `Kết quả tìm kiếm: "${keyword}"`;
+                let searchData = products.filter(item => item.name.toLowerCase().includes(keyword) || item.cat.toLowerCase().includes(keyword));
+                selectedOptions = {};
+                currentData = searchData;
+                renderHTML(searchData);
+                
+                setTimeout(() => {
+                    const titleSection = document.getElementById('categoryTitleArea');
+                    if(titleSection) {
+                        const headerHeight = document.getElementById('mainHeader').offsetHeight || 80;
+                        const offsetPosition = titleSection.getBoundingClientRect().top + window.scrollY - headerHeight - 15;
+                        try {
+                            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                        } catch (err) {
+                            window.scrollTo(0, offsetPosition);
+                        }
+                    }
+                }, 200);
+            } else {
+                scrollToProducts('ALL', document.querySelector('.menu-row li:nth-child(2)'));
+            }
+        }
+
+        // Cuộn lên đầu trang (Scroll to top)
+        window.onscroll = function() {
+            let scrollBtn = document.getElementById("scrollTopBtn");
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollBtn.classList.add("show");
+            } else {
+                scrollBtn.classList.remove("show");
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+
+        // ==========================================
+        // CÁC HIỆU ỨNG CARD & LOGIC GIỎ HÀNG
         // ==========================================
         function handleTilt(e, card) {
+            // FIX LỖI GHOST TAP: Chặn hiệu ứng thay đổi cấu trúc 3D trên màn hình mobile (gây lỗi mất click)
+            if (window.innerWidth <= 900) return;
+
             const cardRect = card.getBoundingClientRect();
             const x = e.clientX - cardRect.left;
             const y = e.clientY - cardRect.top;
-            
             const centerX = cardRect.width / 2;
             const centerY = cardRect.height / 2;
-            
             const rotateX = ((y - centerY) / centerY) * -10; 
             const rotateY = ((x - centerX) / centerX) * 10;
-            
             card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
         }
 
         function resetTilt(card) {
+            if (window.innerWidth <= 900) return; // FIX
             card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
         }
 
@@ -879,31 +1078,10 @@
             priceDisplay.classList.add('updated');
         }
 
-        // TÌM KIẾM
-        function searchProducts(event) {
-            let keyword = event.target.value.toLowerCase().trim();
-            document.querySelectorAll('.menu-row li').forEach(btn => btn.classList.remove('active'));
-            
-            if (keyword !== '') {
-                document.getElementById('categoryTitle').innerText = `Kết quả tìm kiếm cho: "${keyword}"`;
-                let searchData = products.filter(item => item.name.toLowerCase().includes(keyword));
-                selectedOptions = {};
-                renderHTML(searchData);
-                document.getElementById('categoryTitle').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                scrollToProducts('ALL', document.querySelector('.menu-row li:first-child'));
-            }
-        }
-
-        // ==========================================
-        // 3. LOGIC GIỎ HÀNG
-        // ==========================================
         function getCart() { 
             let rawCart = JSON.parse(localStorage.getItem("zenith_cart")) || [];
             let cleanCart = rawCart.filter(item => item && typeof item.price === 'number' && !isNaN(item.price));
-            if(rawCart.length !== cleanCart.length) {
-                localStorage.setItem("zenith_cart", JSON.stringify(cleanCart));
-            }
+            if(rawCart.length !== cleanCart.length) localStorage.setItem("zenith_cart", JSON.stringify(cleanCart));
             return cleanCart;
         }
 
@@ -953,15 +1131,7 @@
             if(index > -1){
                 cart[index].qty++;
             } else {
-                cart.push({ 
-                    id: id, 
-                    cartItemId: cartItemId, 
-                    option: optLabel, 
-                    qty: 1, 
-                    price: finalPrice, 
-                    name: product.name, 
-                    image: product.img 
-                });
+                cart.push({ id: id, cartItemId: cartItemId, option: optLabel, qty: 1, price: finalPrice, name: product.name, image: product.img });
             }
             saveCart(cart);
             
@@ -979,11 +1149,145 @@
             setTimeout(() => toast.remove(), 3000);
         }
 
-        // Khởi chạy khi tải trang lần đầu (Lọc hiển thị TẤT CẢ và không cuộn xuống)
-        document.getElementById('searchInput').value = '';
-        document.getElementById('categoryTitle').innerText = 'TẤT CẢ SẢN PHẨM';
-        renderHTML(products);
-        updateCounts();
+        // ==========================================
+        // BỔ SUNG: LOGIC HOẠT ĐỘNG CHO CHATBOX (UPLOAD & LẶP LẠI TÙY CHỌN & AUTO REPLY)
+        // ==========================================
+        function toggleChat() {
+            document.getElementById('chatBox').classList.toggle('show');
+        }
+
+        function addMessage(text, sender) {
+            const chatBody = document.getElementById('chatBody');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `msg ${sender}-msg`;
+            // Dùng innerHTML để render thẻ img nếu có
+            msgDiv.innerHTML = text;
+            chatBody.appendChild(msgDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function removeQuickOptions() {
+            const optsContainers = document.querySelectorAll('.quick-options');
+            optsContainers.forEach(opt => opt.remove());
+        }
+
+        // Hàm gọi lại các tùy chọn (Size/Lỗi) khi chat kết thúc 1 phiên
+        function showFollowUpOptions() {
+            setTimeout(() => {
+                addMessage('Bạn có cần hỗ trợ thêm vấn đề nào khác không?', 'bot');
+                const chatBody = document.getElementById('chatBody');
+                const optsDiv = document.createElement('div');
+                optsDiv.className = 'quick-options';
+                optsDiv.innerHTML = `
+                    <button class="quick-btn" onclick="sendQuickAction('size_color')">📏 Tư vấn Size & Màu sắc</button>
+                    <button class="quick-btn" onclick="sendQuickAction('report_bug')">⚠️ Phản ánh lỗi Website/App</button>
+                `;
+                chatBody.appendChild(optsDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1500); // Kích hoạt 1.5s sau câu trả lời trước đó
+        }
+
+        // Xử lý gửi ảnh qua input file
+        function handleChatFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgTag = `<br><img src="${e.target.result}" alt="Uploaded Image">`;
+                    addMessage('Đã tải lên tệp đính kèm: ' + imgTag, 'user');
+                    removeQuickOptions(); // Đảm bảo ẩn các nút nếu còn
+                    
+                    setTimeout(() => {
+                        addMessage('Cảm ơn bạn đã cung cấp hình ảnh. Đội ngũ kỹ thuật của Blue Ultra đang kiểm tra và sẽ phản hồi trong thời gian sớm nhất!', 'bot');
+                        showFollowUpOptions(); // Hiện lại tùy chọn sau khi phản hồi
+                    }, 1000);
+                }
+                reader.readAsDataURL(file);
+                // Reset input
+                event.target.value = '';
+            }
+        }
+
+        function sendQuickAction(actionType) {
+            removeQuickOptions();
+            if (actionType === 'size_color') {
+                addMessage('Tôi muốn tư vấn Size & Màu sắc', 'user');
+                setTimeout(() => {
+                    addMessage('Dạ, để Blue Ultra tư vấn chuẩn nhất cho mọi sản phẩm, bạn vui lòng cung cấp giúp mình:\n1. Tên/Mã sản phẩm bạn đang quan tâm?\n2. Chiều cao & Cân nặng hiện tại?\n3. Bạn thích mặc đồ form dáng ôm sát (fit) hay form rộng rãi (oversize)?', 'bot');
+                }, 600);
+            } else if (actionType === 'report_bug') {
+                addMessage('Tôi muốn báo lỗi Website/App', 'user');
+                setTimeout(() => {
+                    addMessage('Blue Ultra vô cùng xin lỗi vì sự bất tiện này.\nBạn vui lòng bấm vào biểu tượng 📎 (ghim kẹp) bên dưới để gửi hình ảnh màn hình bị lỗi, kèm theo mô tả chi tiết để đội ngũ kỹ thuật có thể xử lý ngay lập tức nhé!', 'bot');
+                }, 600);
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInputMsg');
+            const text = input.value.trim();
+            if (text === '') return;
+            
+            // Lọc text thành chuỗi an toàn để hiển thị
+            const safeText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            addMessage(safeText, 'user');
+            input.value = '';
+            removeQuickOptions(); // Đảm bảo ẩn các nút nếu còn
+            
+            // CHỨC NĂNG TỰ ĐỘNG TRẢ LỜI THEO TỪ KHÓA SẢN PHẨM
+            const lowerInput = text.toLowerCase();
+            let botReply = "";
+
+            if (lowerInput.includes("váy") || lowerInput.includes("sơ mi nữ") || lowerInput.includes("chân váy")) {
+                botReply = "Dạ với các mẫu Thời Trang Nữ, form đồ thiết kế chuẩn dáng tôn eo.\n- Size S: Dưới 48kg, eo dưới 64cm\n- Size M: Từ 48 - 54kg, eo 65-70cm\n- Size L: Từ 55 - 60kg, eo 71-76cm\nBạn đối chiếu xem mình vừa size nào nhé, hoặc cho shop xin số đo cụ thể để tư vấn kỹ hơn ạ!";
+            } 
+            else if (lowerInput.includes("áo polo") || lowerInput.includes("quần tây") || lowerInput.includes("áo khoác")) {
+                botReply = "Dạ với mẫu Thời Trang Nam, form áo quần bên shop mặc rất thoải mái:\n- Size M: 50 - 65kg, chiều cao dưới 1m70\n- Size L: 65 - 75kg, chiều cao 1m70 - 1m78\n- Size XL: 75 - 85kg, chiều cao trên 1m78\nAnh cho em xin chiều cao và cân nặng để em chọn size chuẩn xác nhất nhé!";
+            } 
+            else if (lowerInput.includes("sneaker") || lowerInput.includes("giày")) {
+                botReply = "Dạ mẫu giày Sneaker bên shop là form vừa vặn. Nếu chân bạn bè ngang thì nên nhích lên 1 size (ví dụ bình thường đi 40 thì lấy 41) để đi lại được thoải mái nhất nhé. Bạn thường đi giày size mấy ạ?";
+            } 
+            else if (lowerInput.includes("balo") || lowerInput.includes("túi")) {
+                botReply = "Dạ mẫu Túi/Balo này bên shop được làm từ chất liệu cao cấp chống thấm nước nhẹ, bên trong có nhiều ngăn chống sốc rất tiện lợi. Bạn đang thích màu sắc nào ạ?";
+            } 
+            else if (lowerInput.includes("macbook") || lowerInput.includes("iphone") || lowerInput.includes("tai nghe") || lowerInput.includes("máy") || lowerInput.includes("nồi")) {
+                botReply = "Dạ đối với sản phẩm Công Nghệ / Gia Dụng, Blue Ultra cam kết hàng chính hãng 100%, bảo hành đủ 12 tháng và hỗ trợ 1 đổi 1 trong 30 ngày đầu nếu có lỗi từ nhà sản xuất. Bạn cần tư vấn thêm thông số kỹ thuật nào của dòng này không ạ?";
+            } 
+            else {
+                // NẾU KHÔNG TÌM THẤY TỪ KHÓA SẢN PHẨM NÀO, CHUYỂN SANG NHÂN VIÊN
+                botReply = "Cảm ơn bạn đã phản hồi! Do thông tin này cần kiểm tra chi tiết hơn, tư vấn viên thật của Blue Ultra đã tiếp nhận và sẽ chat trực tiếp với bạn trong vài giây tới nhé ạ.";
+            }
+
+            // Gửi tin nhắn trả lời sau 1 giây
+            setTimeout(() => {
+                addMessage(botReply, 'bot');
+                showFollowUpOptions(); // Hiện lại tùy chọn sau khi phản hồi
+            }, 1000);
+        }
+
+        function handleChatEnter(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        // ==========================================
+        // KHỞI CHẠY KHI VỪA VÀO TRANG
+        // ==========================================
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search');
+
+            if (searchQuery) {
+                document.getElementById('searchInput').value = searchQuery;
+                executeSearch(searchQuery);
+            } else {
+                document.getElementById('searchInput').value = '';
+                document.getElementById('categoryTitle').innerText = 'TẤT CẢ SẢN PHẨM';
+                renderHTML(products);
+            }
+            updateCounts();
+        };
 
     </script>
 </body>
