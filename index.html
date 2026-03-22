@@ -114,72 +114,62 @@
         .slider-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: 0.3s; }
         .slider-dot.active { background: #fff; transform: scale(1.2); }
 
-        /* === BỔ SUNG CSS PHẦN TIÊU ĐỀ & NÚT SẮP XẾP === */
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin: 20px 0 40px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; scroll-margin-top: 100px;}
+        /* === BỔ SUNG CSS PHẦN TIÊU ĐỀ === */
+        .section-header { 
+            display: flex; justify-content: space-between; align-items: center; margin: 20px 0 40px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; scroll-margin-top: 100px;
+            position: relative; z-index: 1000; 
+        }
         .section-title { font-size: 2rem; font-weight: 900; text-transform: uppercase; color: var(--primary); margin: 0;}
         
-        /* FIX: VIẾT LẠI TOÀN BỘ CSS VÙNG CHỌN SẮP XẾP CHUẨN ĐA NỀN TẢNG (Click vào đâu cũng mở) */
-        .sort-box { 
-            position: relative; 
-            display: inline-block; 
-            min-width: 220px; 
-            z-index: 20; 
-        }
-
-        /* Khối chứa viền và nền giả để Select có thể đè lên hoàn toàn */
-        .sort-box-wrapper {
+        /* ---------------------------------------------------- */
+        /* UI SẮP XẾP BẰNG NATIVE SELECT - CHUẨN UX/UI          */
+        /* ---------------------------------------------------- */
+        .sort-container {
             position: relative;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            background-color: var(--bg-color);
-            transition: var(--transition);
-            overflow: hidden; /* Cắt phần thẻ select tràn ra ngoài nếu có */
-        }
-        
-        .sort-box-wrapper:hover {
-            border-color: var(--primary);
-        }
-        .sort-box-wrapper:focus-within {
-             border-color: var(--red);
+            min-width: 250px; /* Tăng chiều rộng tối thiểu trên Laptop */
         }
 
-        .sort-box select { 
+        #productSorter {
             width: 100%;
-            appearance: none; 
-            -webkit-appearance: none; 
-            -moz-appearance: none; 
-            padding: 10px 40px 10px 15px; 
-            font-family: var(--font); 
-            font-weight: 600; 
-            font-size: 0.9rem; 
-            background: transparent; /* Nền trong suốt để thấy nền của wrapper */
-            border: none; /* Bỏ viền của thẻ select, dùng viền của wrapper */
-            color: var(--text-color); 
-            cursor: pointer; 
-            outline: none; 
-            position: relative;
-            z-index: 10; /* Z-index cao hơn mũi tên để bắt click trên toàn bộ diện tích */
-        }
-        
-        /* Mũi tên giả (Fake Arrow) thay thế đồng nhất trên mọi máy */
-        .sort-box-wrapper::after {
-            content: '\f107'; /* Icon FontAwesome */
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
+            padding: 16px 20px; /* Tăng đệm trên/dưới và trái/phải để khung to hơn */
+            min-height: 52px; /* Đảm bảo chiều cao dư dả, chuẩn ngón tay bấm trên Mobile */
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             color: var(--text-color);
-            pointer-events: none; /* Mũi tên không nhận click, để lọt xuống thẻ select */
-            z-index: 5; /* Z-index thấp hơn select để không cản trở click */
-            font-size: 1rem;
+            font-size: 1.05rem; /* Tăng kích thước chữ cho dễ đọc */
+            font-weight: 600;
+            font-family: var(--font);
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px top 50%; /* Đẩy icon mũi tên vào trong một chút cho cân đối */
+            background-size: 14px auto; /* Tăng nhẹ kích thước mũi tên */
+            transition: all 0.3s ease;
         }
+
+        /* Biểu tượng mũi tên cho Dark Mode */
+        :root[data-theme="dark"] #productSorter {
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23f1f1f1%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+        }
+
+        #productSorter:hover, #productSorter:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05); /* Thêm viền mờ khi hover/focus để nhấn mạnh nút */
+        }
+        :root[data-theme="dark"] #productSorter:hover, 
+        :root[data-theme="dark"] #productSorter:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+        /* ---------------------------------------------------- */
 
         /* === 4. LƯỚI SẢN PHẨM === */
         .no-result { grid-column: 1 / -1; text-align: center; padding: 50px; font-size: 1.2rem; color: #888; font-weight: 600; }
 
-        .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 80px; perspective: 1000px; }
+        .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 80px; perspective: 1000px; position: relative; z-index: 1; }
         
         .product-card { 
             background: var(--bg-color); 
@@ -539,8 +529,8 @@
             .product-grid { grid-template-columns: repeat(2, 1fr); perspective: none; }
             .product-card { transform-style: flat; } 
             
-            /* Kéo giãn ô lựa chọn Sắp xếp trên màn hình nhỏ */
-            .sort-box { width: 100%; }
+            /* Kéo giãn khối sắp xếp trên di động */
+            .sort-container { width: 100%; }
 
             .product-img, .product-info, .product-price, .btn-add, .wishlist-btn {
                 transform: none !important;
@@ -676,14 +666,12 @@
         <div class="section-header" id="categoryTitleArea">
             <h2 class="section-title" id="categoryTitle">TẤT CẢ SẢN PHẨM</h2>
             
-            <div class="sort-box">
-                <div class="sort-box-wrapper">
-                    <select id="sortSelect" onchange="handleSortProducts()">
-                        <option value="default">Sắp xếp: Mặc định</option>
-                        <option value="price-asc">Giá: Từ Thấp đến Cao</option>
-                        <option value="price-desc">Giá: Từ Cao xuống Thấp</option>
-                    </select>
-                </div>
+            <div class="sort-container">
+                <select id="productSorter" onchange="applySort(this.value)">
+                    <option value="default">Sắp xếp: Mặc định</option>
+                    <option value="price-asc">Giá: Từ Thấp đến Cao</option>
+                    <option value="price-desc">Giá: Từ Cao xuống Thấp</option>
+                </select>
             </div>
         </div>
         
@@ -953,7 +941,8 @@
                 if(p.options) {
                     let pills = p.options.items.map(opt => {
                         let optPrice = opt.price ? opt.price : p.price; 
-                        return `<span class="opt-pill" onclick="selectOption(this, '${p.id}', '${opt.label}', ${optPrice})">${opt.label}</span>`;
+                        let isActive = selectedOptions[p.id] && selectedOptions[p.id].label === opt.label ? 'active' : '';
+                        return `<span class="opt-pill ${isActive}" onclick="selectOption(this, '${p.id}', '${opt.label}', ${optPrice})">${opt.label}</span>`;
                     }).join('');
                     
                     optionsHTML = `
@@ -963,6 +952,8 @@
                         </div>
                     `;
                 }
+
+                let currentDisplayPrice = selectedOptions[p.id] ? selectedOptions[p.id].price : p.price;
 
                 return `
                 <div class="product-card" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
@@ -976,7 +967,7 @@
                         <span class="product-cat">${p.cat}</span>
                         <a href="product.html?id=${p.id}"><h3 class="product-name">${p.name}</h3></a>
                         
-                        <div class="product-price" id="price-display-${p.id}">${formatPrice(p.price)}</div>
+                        <div class="product-price" id="price-display-${p.id}">${formatPrice(currentDisplayPrice)}</div>
                         
                         ${optionsHTML}
 
@@ -990,9 +981,21 @@
         }
 
         // ==========================================
-        // TÌM KIẾM, SẮP XẾP VÀ CHẠY ĐẾN ĐÚNG SẢN PHẨM
+        // JS XỬ LÝ SẮP XẾP SẢN PHẨM 
         // ==========================================
-        
+        function applySort(value) {
+            let dataToSort = [...currentData];
+            if (value === 'price-asc') {
+                dataToSort.sort((a, b) => a.price - b.price);
+            } else if (value === 'price-desc') {
+                dataToSort.sort((a, b) => b.price - a.price);
+            }
+            renderHTML(dataToSort);
+        }
+
+        // ==========================================
+        // TÌM KIẾM, CUỘN DANH MỤC
+        // ==========================================
         function scrollToProducts(category, btnElement, skipScroll = false) {
             let menuItems = document.querySelectorAll('.menu-row li');
             menuItems.forEach(btn => btn.classList.remove('active'));
@@ -1011,7 +1014,9 @@
             document.getElementById('searchInput').value = '';
             document.getElementById('categoryTitle').innerText = category === 'ALL' ? 'TẤT CẢ SẢN PHẨM' : category;
 
-            document.getElementById('sortSelect').value = 'default';
+            // Reset Dropdown về Mặc định
+            const sorter = document.getElementById('productSorter');
+            if(sorter) sorter.value = 'default';
 
             let filteredData = category === 'ALL' ? products : products.filter(item => item.cat === category); 
             selectedOptions = {}; 
@@ -1068,19 +1073,6 @@
             }, 50); 
         }
 
-        function handleSortProducts() {
-            let sortValue = document.getElementById('sortSelect').value;
-            let dataToSort = [...currentData];
-
-            if (sortValue === 'price-asc') {
-                dataToSort.sort((a, b) => a.price - b.price);
-            } else if (sortValue === 'price-desc') {
-                dataToSort.sort((a, b) => b.price - a.price);
-            }
-
-            renderHTML(dataToSort);
-        }
-
         function searchProducts(event) {
             let keyword = event.target.value.toLowerCase().trim();
             executeSearch(keyword);
@@ -1088,7 +1080,10 @@
 
         function executeSearch(keyword) {
             document.querySelectorAll('.menu-row li').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('sortSelect').value = 'default';
+            
+            // Reset Dropdown về Mặc định
+            const sorter = document.getElementById('productSorter');
+            if(sorter) sorter.value = 'default';
 
             if (keyword !== '') {
                 document.getElementById('categoryTitle').innerText = `Kết quả tìm kiếm: "${keyword}"`;
