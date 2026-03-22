@@ -100,8 +100,8 @@
 
         /* === 3. BANNER SLIDER CHUYỂN ĐỘNG === */
         .slider-wrapper { position: relative; height: 80vh; width: 100%; overflow: hidden; margin-bottom: 50px; }
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; z-index: 1; cursor: pointer; /* Thêm con trỏ tay */ }
-        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2; pointer-events: none; /* FIX: Cho phép click xuyên qua lớp màng đen */ }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; z-index: 1; cursor: pointer; }
+        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2; pointer-events: none; }
         .slide.active { opacity: 1; z-index: 3; }
         
         .slide-content { position: relative; z-index: 4; transform: translateY(20px); transition: 0.8s; }
@@ -185,7 +185,7 @@
         .scroll-top-btn.show { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);}
         .scroll-top-btn:hover { background-color: var(--red); transform: translateY(-5px); }
 
-        /* === 9. BỔ SUNG CHATBOX TƯ VẤN & BÁO LỖI === */
+        /* === 9. BỔ SUNG CHATBOX TƯ VẤN === */
         .chat-widget { position: fixed; bottom: 90px; right: 30px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; }
         .chat-toggle-btn { width: 55px; height: 55px; border-radius: 50%; background: var(--primary); color: var(--primary-invert); font-size: 1.6rem; border: none; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
         .chat-toggle-btn:hover { background: var(--red); transform: scale(1.1); color: #fff; }
@@ -198,11 +198,10 @@
         .chat-body::-webkit-scrollbar { width: 5px; }
         .chat-body::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
         
-        /* Hiển thị xuống dòng cho nội dung tư vấn */
         .msg { max-width: 85%; padding: 10px 15px; border-radius: 15px; line-height: 1.5; word-wrap: break-word; white-space: pre-wrap; }
         .bot-msg { background: var(--bg-alt); color: var(--text-color); border-bottom-left-radius: 2px; align-self: flex-start; border: 1px solid var(--border-color); }
         .user-msg { background: var(--primary); color: var(--primary-invert); border-bottom-right-radius: 2px; align-self: flex-end; }
-        .msg img { max-width: 100%; border-radius: 8px; margin-top: 8px; border: 1px solid var(--border-color); } /* CSS cho ảnh tải lên */
+        .msg img { max-width: 100%; border-radius: 8px; margin-top: 8px; border: 1px solid var(--border-color); } 
         
         .quick-options { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
         .quick-btn { background: transparent; border: 1px solid var(--primary); color: var(--text-color); padding: 8px 12px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; transition: 0.2s; text-align: left; font-family: var(--font); font-weight: 600;}
@@ -210,7 +209,6 @@
         
         .chat-input { padding: 12px; border-top: 1px solid var(--border-color); display: flex; gap: 8px; background: var(--bg-color); align-items: center;}
         
-        /* Chỉnh CSS nút attach ảnh */
         .chat-input .attach-btn { background: var(--bg-alt); color: var(--text-color); border: 1px solid var(--border-color); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
         .chat-input .attach-btn:hover { background: var(--border-color); color: var(--primary); }
         
@@ -220,7 +218,7 @@
         .chat-input .send-btn { background: var(--primary); color: var(--primary-invert); border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;}
         .chat-input .send-btn:hover { background: var(--red); color: #fff; }
 
-        /* === 6. ABOUT / BANNER BOTTOM === */
+        /* === 6. ABOUT === */
         .about-section { text-align: center; margin: 40px 0 0; padding-top: 60px; border-top: 1px solid var(--border-color); padding-bottom: 60px; }
         .about-title { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 20px; color: var(--text-color); }
         .about-desc { font-size: 1.1rem; line-height: 1.8; color: #666; max-width: 800px; margin: 0 auto 50px; font-weight: 500; }
@@ -485,12 +483,7 @@
             .product-grid { grid-template-columns: repeat(2, 1fr); perspective: none; }
             .product-card { transform-style: flat; } 
             
-            /* ĐÂY LÀ ĐOẠN MÃ ĐÃ ĐƯỢC CHỈNH SỬA ĐỂ FIX LỖI 3D TRÊN MOBILE */
-            .product-img,
-            .product-info,
-            .product-price,
-            .btn-add,
-            .wishlist-btn {
+            .product-img, .product-info, .product-price, .btn-add, .wishlist-btn {
                 transform: none !important;
             }
             .product-price.updated {
@@ -506,7 +499,6 @@
             .footer-grid { grid-template-columns: repeat(2, 1fr); }
             .section-header { flex-direction: column; align-items: flex-start; gap: 15px; }
             
-            /* FIX: Căn lại nút Chat và Scroll to Top để không đè lên nút "Thêm vào giỏ" */
             .chat-widget { bottom: 65px; right: 15px; transform: scale(0.85); transform-origin: bottom right;} 
             .floating-action { bottom: 15px; right: 15px; transform: scale(0.75); transform-origin: bottom right;}
         }
@@ -517,7 +509,6 @@
             .footer-grid { grid-template-columns: 1fr; }
         }
 
-        /* Keyframe mới tối ưu cho điện thoại */
         @keyframes popPriceMobile {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); color: var(--primary); }
@@ -586,37 +577,37 @@
         <div class="slide active" style="background-image: url('https://replicate.delivery/xpbkg/H88K9B602D50C43D42C67B6B0E09995543D69F393D356A49/output.png');" onclick="scrollToProducts('ALL')">
             <div class="slide-content">
                 <h1>BỘ SƯU TẬP MỚI NHẤT</h1>
-                <button class="btn-shop">MUA NGAY</button>
+                <button class="btn-shop" onclick="event.stopPropagation(); scrollToProducts('ALL')">MUA NGAY</button>
             </div>
         </div>
         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=1920');" onclick="scrollToProducts('CÔNG NGHỆ')">
             <div class="slide-content">
                 <h1>ĐỈNH CAO CÔNG NGHỆ</h1>
-                <button class="btn-shop">KHÁM PHÁ</button>
+                <button class="btn-shop" onclick="event.stopPropagation(); scrollToSpecificProduct('t1', 'CÔNG NGHỆ')">XEM MACBOOK M3</button>
             </div>
         </div>
         <div class="slide" style="background-image: url('https://jadeblue.com/cdn/shop/articles/mens_summer_wear.jpg?v=1714380887&width=1100');" onclick="scrollToProducts('NAM')">
             <div class="slide-content">
                 <h1>PHONG CÁCH PHÁI MẠNH</h1>
-                <button class="btn-shop">PHONG CÁCH NAM</button>
+                <button class="btn-shop" onclick="event.stopPropagation(); scrollToSpecificProduct('m3', 'NAM')">XEM ÁO KHOÁC DA</button>
             </div>
         </div>
         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1920');" onclick="scrollToProducts('NỮ')">
             <div class="slide-content">
                 <h1>NÉT ĐẸP QUYẾN RŨ</h1>
-                <button class="btn-shop">THỜI TRANG NỮ</button>
+                <button class="btn-shop" onclick="event.stopPropagation(); scrollToSpecificProduct('w1', 'NỮ')">XEM VÁY LỤA NỮ</button>
             </div>
         </div>
         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1920');" onclick="scrollToProducts('GIÀY TÚI')">
             <div class="slide-content">
                 <h1>BƯỚC CHÂN NĂNG ĐỘNG</h1>
-                <button class="btn-shop">XEM CHI TIẾT</button>
+                <button class="btn-shop" onclick="event.stopPropagation(); scrollToSpecificProduct('s1', 'GIÀY TÚI')">XEM SNEAKER ĐỎ</button>
             </div>
         </div>
         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1920');" onclick="scrollToProducts('GIA DỤNG')">
             <div class="slide-content">
                 <h1>TIỆN ÍCH THÔNG MINH</h1>
-                <button class="btn-shop">ĐỒ GIA DỤNG</button>
+                <button class="btn-shop" onclick="event.stopPropagation(); scrollToSpecificProduct('h2', 'GIA DỤNG')">XEM NỒI CHIÊN KHÔNG DẦU</button>
             </div>
         </div>
     </div>
@@ -883,7 +874,7 @@
         }, 4000);
 
         let selectedOptions = {}; 
-        let currentData = products; // Lưu trữ dữ liệu đang được lọc theo Category để dùng cho Sort
+        let currentData = products; 
 
         function renderHTML(dataArray) {
             const grid = document.getElementById('productGrid');
@@ -938,9 +929,11 @@
         }
 
         // ==========================================
-        // TÌM KIẾM VÀ SẮP XẾP SẢN PHẨM (ĐÃ SỬA LỖI SCROLL)
+        // CẬP NHẬT: TÌM KIẾM, SẮP XẾP VÀ CHẠY ĐẾN ĐÚNG SẢN PHẨM
         // ==========================================
-        function scrollToProducts(category, btnElement) {
+        
+        // Thêm tham số skipScroll để ngăn xung đột hiệu ứng cuộn
+        function scrollToProducts(category, btnElement, skipScroll = false) {
             let menuItems = document.querySelectorAll('.menu-row li');
             menuItems.forEach(btn => btn.classList.remove('active'));
 
@@ -965,19 +958,53 @@
             currentData = filteredData; 
             renderHTML(filteredData);
 
-            setTimeout(() => {
-                const titleSection = document.getElementById('categoryTitleArea');
-                if(titleSection) {
-                    const headerHeight = document.getElementById('mainHeader').offsetHeight || 80;
-                    const offsetPosition = titleSection.getBoundingClientRect().top + window.scrollY - headerHeight - 15;
-                    
-                    try {
-                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                    } catch (err) {
-                        window.scrollTo(0, offsetPosition); // Fallback an toàn
+            if(!skipScroll) {
+                setTimeout(() => {
+                    const titleSection = document.getElementById('categoryTitleArea');
+                    if(titleSection) {
+                        const headerHeight = document.getElementById('mainHeader').offsetHeight || 80;
+                        const offsetPosition = titleSection.getBoundingClientRect().top + window.scrollY - headerHeight - 15;
+                        
+                        try {
+                            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                        } catch (err) {
+                            window.scrollTo(0, offsetPosition); 
+                        }
                     }
+                }, 200); 
+            }
+        }
+
+        // HÀM MỚI: Tự động chạy đến chính xác sản phẩm bạn click từ Banner
+        function scrollToSpecificProduct(productId, category) {
+            // Bước 1: Render danh mục tương ứng nhưng BỎ QUA lệnh cuộn chuột mặc định
+            scrollToProducts(category, null, true); 
+            
+            // Bước 2: Tìm thẻ sản phẩm đó và cuộn chuột thẳng tới nó
+            setTimeout(() => {
+                const priceElement = document.getElementById(`price-display-${productId}`);
+                if(priceElement) {
+                    const productCard = priceElement.closest('.product-card');
+                    const headerHeight = document.getElementById('mainHeader').offsetHeight || 80;
+                    const offsetPosition = productCard.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
+                    
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    
+                    // Hiệu ứng làm nổi bật (nhấp nháy viền đỏ) để khách hàng thấy dễ dàng
+                    productCard.style.transition = 'all 0.5s ease';
+                    productCard.style.transform = window.innerWidth > 900 ? 'scale(1.05)' : 'scale(1.02)';
+                    productCard.style.boxShadow = '0 0 25px var(--red)';
+                    productCard.style.borderColor = 'var(--red)';
+                    productCard.style.zIndex = '10';
+                    
+                    setTimeout(() => {
+                        productCard.style.transform = '';
+                        productCard.style.boxShadow = '';
+                        productCard.style.borderColor = '';
+                        productCard.style.zIndex = '';
+                    }, 2000);
                 }
-            }, 200); 
+            }, 50); // Timeout ngắn để tạo sự liền mạch
         }
 
         function handleSortProducts() {
@@ -1026,7 +1053,6 @@
             }
         }
 
-        // Cuộn lên đầu trang (Scroll to top)
         window.onscroll = function() {
             let scrollBtn = document.getElementById("scrollTopBtn");
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
@@ -1040,12 +1066,10 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-
         // ==========================================
         // CÁC HIỆU ỨNG CARD & LOGIC GIỎ HÀNG
         // ==========================================
         function handleTilt(e, card) {
-            // FIX LỖI GHOST TAP: Chặn hiệu ứng thay đổi cấu trúc 3D trên màn hình mobile (gây lỗi mất click)
             if (window.innerWidth <= 900) return;
 
             const cardRect = card.getBoundingClientRect();
@@ -1059,7 +1083,7 @@
         }
 
         function resetTilt(card) {
-            if (window.innerWidth <= 900) return; // FIX
+            if (window.innerWidth <= 900) return; 
             card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
         }
 
@@ -1150,7 +1174,7 @@
         }
 
         // ==========================================
-        // BỔ SUNG: LOGIC HOẠT ĐỘNG CHO CHATBOX (UPLOAD & LẶP LẠI TÙY CHỌN & AUTO REPLY)
+        // LOGIC CHATBOX TƯ VẤN
         // ==========================================
         function toggleChat() {
             document.getElementById('chatBox').classList.toggle('show');
@@ -1160,7 +1184,6 @@
             const chatBody = document.getElementById('chatBody');
             const msgDiv = document.createElement('div');
             msgDiv.className = `msg ${sender}-msg`;
-            // Dùng innerHTML để render thẻ img nếu có
             msgDiv.innerHTML = text;
             chatBody.appendChild(msgDiv);
             chatBody.scrollTop = chatBody.scrollHeight;
@@ -1171,7 +1194,6 @@
             optsContainers.forEach(opt => opt.remove());
         }
 
-        // Hàm gọi lại các tùy chọn (Size/Lỗi) khi chat kết thúc 1 phiên
         function showFollowUpOptions() {
             setTimeout(() => {
                 addMessage('Bạn có cần hỗ trợ thêm vấn đề nào khác không?', 'bot');
@@ -1184,10 +1206,9 @@
                 `;
                 chatBody.appendChild(optsDiv);
                 chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1500); // Kích hoạt 1.5s sau câu trả lời trước đó
+            }, 1500); 
         }
 
-        // Xử lý gửi ảnh qua input file
         function handleChatFileUpload(event) {
             const file = event.target.files[0];
             if (file) {
@@ -1195,15 +1216,14 @@
                 reader.onload = function(e) {
                     const imgTag = `<br><img src="${e.target.result}" alt="Uploaded Image">`;
                     addMessage('Đã tải lên tệp đính kèm: ' + imgTag, 'user');
-                    removeQuickOptions(); // Đảm bảo ẩn các nút nếu còn
+                    removeQuickOptions(); 
                     
                     setTimeout(() => {
                         addMessage('Cảm ơn bạn đã cung cấp hình ảnh. Đội ngũ kỹ thuật của Blue Ultra đang kiểm tra và sẽ phản hồi trong thời gian sớm nhất!', 'bot');
-                        showFollowUpOptions(); // Hiện lại tùy chọn sau khi phản hồi
+                        showFollowUpOptions(); 
                     }, 1000);
                 }
                 reader.readAsDataURL(file);
-                // Reset input
                 event.target.value = '';
             }
         }
@@ -1228,13 +1248,11 @@
             const text = input.value.trim();
             if (text === '') return;
             
-            // Lọc text thành chuỗi an toàn để hiển thị
             const safeText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
             addMessage(safeText, 'user');
             input.value = '';
-            removeQuickOptions(); // Đảm bảo ẩn các nút nếu còn
+            removeQuickOptions(); 
             
-            // CHỨC NĂNG TỰ ĐỘNG TRẢ LỜI THEO TỪ KHÓA SẢN PHẨM
             const lowerInput = text.toLowerCase();
             let botReply = "";
 
@@ -1254,14 +1272,12 @@
                 botReply = "Dạ đối với sản phẩm Công Nghệ / Gia Dụng, Blue Ultra cam kết hàng chính hãng 100%, bảo hành đủ 12 tháng và hỗ trợ 1 đổi 1 trong 30 ngày đầu nếu có lỗi từ nhà sản xuất. Bạn cần tư vấn thêm thông số kỹ thuật nào của dòng này không ạ?";
             } 
             else {
-                // NẾU KHÔNG TÌM THẤY TỪ KHÓA SẢN PHẨM NÀO, CHUYỂN SANG NHÂN VIÊN
                 botReply = "Cảm ơn bạn đã phản hồi! Do thông tin này cần kiểm tra chi tiết hơn, tư vấn viên thật của Blue Ultra đã tiếp nhận và sẽ chat trực tiếp với bạn trong vài giây tới nhé ạ.";
             }
 
-            // Gửi tin nhắn trả lời sau 1 giây
             setTimeout(() => {
                 addMessage(botReply, 'bot');
-                showFollowUpOptions(); // Hiện lại tùy chọn sau khi phản hồi
+                showFollowUpOptions(); 
             }, 1000);
         }
 
@@ -1271,9 +1287,6 @@
             }
         }
 
-        // ==========================================
-        // KHỞI CHẠY KHI VỪA VÀO TRANG
-        // ==========================================
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const searchQuery = urlParams.get('search');
